@@ -1,4 +1,4 @@
-package com.example.kd23backend.auth;
+package com.example.kd23backend.auth.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.example.kd23backend.service;
+package com.example.kd23backend.auth.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
