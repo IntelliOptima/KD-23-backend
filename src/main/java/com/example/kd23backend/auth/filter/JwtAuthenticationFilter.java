@@ -1,6 +1,6 @@
-package com.example.kd23backend.config;
+package com.example.kd23backend.auth.filter;
 
-import com.example.kd23backend.service.JwtService;
+import com.example.kd23backend.auth.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

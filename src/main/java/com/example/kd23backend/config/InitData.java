@@ -1,8 +1,9 @@
 package com.example.kd23backend.config;
 
-import com.example.kd23backend.model.Role;
-import com.example.kd23backend.model.User;
-import com.example.kd23backend.repository.UserRepo;
+import com.example.kd23backend.auth.config.ApplicationConfig;
+import com.example.kd23backend.auth.model.Role;
+import com.example.kd23backend.auth.model.User;
+import com.example.kd23backend.auth.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

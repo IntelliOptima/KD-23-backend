@@ -1,5 +1,6 @@
-package com.example.kd23backend.config;
+package com.example.kd23backend.auth.config;
 
+import com.example.kd23backend.auth.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
