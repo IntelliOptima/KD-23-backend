@@ -1,7 +1,7 @@
-package com.example.kd23backend.repository;
+package com.example.kd23backend.auth.repository;
 
 
-import com.example.kd23backend.model.User;
+import com.example.kd23backend.auth.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

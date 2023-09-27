@@ -1,10 +1,12 @@
-package com.example.kd23backend.auth;
+package com.example.kd23backend.auth.service;
 
 
-import com.example.kd23backend.model.Role;
-import com.example.kd23backend.model.User;
-import com.example.kd23backend.repository.UserRepo;
-import com.example.kd23backend.service.JwtService;
+import com.example.kd23backend.auth.controller.AuthenticationRequest;
+import com.example.kd23backend.auth.controller.AuthenticationResponse;
+import com.example.kd23backend.auth.controller.RegisterRequest;
+import com.example.kd23backend.auth.model.Role;
+import com.example.kd23backend.auth.model.User;
+import com.example.kd23backend.auth.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

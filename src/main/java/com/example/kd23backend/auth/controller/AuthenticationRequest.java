@@ -1,4 +1,4 @@
-package com.example.kd23backend.auth;
+package com.example.kd23backend.auth.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-
+public class AuthenticationRequest {
     private String username;
     private String password;
 }
