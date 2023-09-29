@@ -1,4 +1,4 @@
-package com.example.kd23backend.model;
+package com.example.kd23backend.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
