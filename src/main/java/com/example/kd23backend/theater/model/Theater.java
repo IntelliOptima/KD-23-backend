@@ -3,6 +3,7 @@ package com.example.kd23backend.theater.model;
 import com.example.kd23backend.cinema.model.Cinema;
 import com.example.kd23backend.seat.model.Seat;
 import com.example.kd23backend.movie_show.model.MovieShow;
+import com.example.kd23backend.theater.model.interfaces.PricingStrategy;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -12,9 +13,11 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
-@Entity
 @Data
-public class Theater {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
+@Entity
+public abstract class Theater {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -39,5 +42,12 @@ public class Theater {
 
     public Theater() {
         this.seats = new TreeSet<>(Comparator.comparingInt(Seat::getSeatNum));
+    }
+
+    @Transient
+    protected PricingStrategy pricingStrategy;
+
+    public double getSeatPrice(Seat seat) {
+        return pricingStrategy.calculateSeatPrice(seat);
     }
 }
