@@ -1,7 +1,7 @@
 package com.example.kd23backend.movie.service;
 
-import com.example.kd23backend.mappers.movie.MovieDTO;
-import com.example.kd23backend.mappers.movie.MovieMapper;
+import com.example.kd23backend.movie.mappers.MovieDTO;
+import com.example.kd23backend.movie.mappers.MovieMapper;
 import com.example.kd23backend.movie.model.Actor;
 import com.example.kd23backend.movie.model.Genre;
 import com.example.kd23backend.movie.model.Movie;

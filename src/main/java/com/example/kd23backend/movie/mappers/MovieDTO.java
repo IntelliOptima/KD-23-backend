@@ -1,4 +1,4 @@
-package com.example.kd23backend.mappers.movie;
+package com.example.kd23backend.movie.mappers;
 
 import com.example.kd23backend.movie.model.Genre;
 import lombok.Data;
