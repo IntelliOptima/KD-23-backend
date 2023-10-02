@@ -14,7 +14,7 @@ public class Actor {
     @Id
     private String name;
 
-    @ManyToMany(mappedBy = "actors")
+    @ManyToMany(mappedBy = "actors", cascade = CascadeType.MERGE)
     @JsonBackReference
     private Set<Movie> movies;
 }

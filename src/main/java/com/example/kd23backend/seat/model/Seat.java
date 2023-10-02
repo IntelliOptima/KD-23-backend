@@ -13,6 +13,8 @@ public class Seat {
     private int id;
     private int price;
     private int seatNum;
+
+
     @ManyToOne
     @JoinColumn(name = "theater_id", referencedColumnName = "id")
     @JsonBackReference

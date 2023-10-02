@@ -16,15 +16,19 @@ public class Show {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
+    @JsonManagedReference
     private Movie movie;
 
     @ManyToOne
+    @JoinColumn(name = "theatre_id", referencedColumnName = "id")
     @JsonManagedReference
     private Theater theater;
 
     private LocalDateTime startDateTime;
+
     @ManyToOne
     @JoinColumn(name = "program_id", referencedColumnName = "id")
     @JsonBackReference
