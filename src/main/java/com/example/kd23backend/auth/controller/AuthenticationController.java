@@ -1,6 +1,9 @@
 package com.example.kd23backend.auth.controller;
 
 
+import com.example.kd23backend.auth.model.AuthenticationRequest;
+import com.example.kd23backend.auth.model.AuthenticationResponse;
+import com.example.kd23backend.auth.model.RegisterRequest;
 import com.example.kd23backend.auth.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +17,13 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
-
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest registerRequest
     ) {
         return ResponseEntity.ok(authenticationService.register(registerRequest));
     }
+
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(

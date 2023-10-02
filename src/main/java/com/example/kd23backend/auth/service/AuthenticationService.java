@@ -1,11 +1,11 @@
 package com.example.kd23backend.auth.service;
 
 
-import com.example.kd23backend.auth.controller.AuthenticationRequest;
-import com.example.kd23backend.auth.controller.AuthenticationResponse;
-import com.example.kd23backend.auth.controller.RegisterRequest;
+import com.example.kd23backend.auth.model.AuthenticationRequest;
+import com.example.kd23backend.auth.model.AuthenticationResponse;
+import com.example.kd23backend.auth.model.RegisterRequest;
 import com.example.kd23backend.auth.model.Role;
-import com.example.kd23backend.auth.model.User;
+import com.example.kd23backend.auth.model.Login;
 import com.example.kd23backend.auth.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,14 +27,14 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest registerRequest) {
 
-        User user = new User();
-        user.setUsername(registerRequest.getUsername());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setRole(Role.USER);
+        Login login = new Login();
+        login.setEmail(registerRequest.getUsername());
+        login.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        login.setRole(Role.USER);
 
-        userRepo.save(user);
+        userRepo.save(login);
 
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateToken(login);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -48,7 +48,7 @@ public class AuthenticationService {
                         authenticationRequest.getPassword())
         );
 
-        var user = userRepo.findByUsername(authenticationRequest.getUsername()).orElseThrow();
+        var user = userRepo.findByEmail(authenticationRequest.getUsername()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
 
         return AuthenticationResponse.builder()

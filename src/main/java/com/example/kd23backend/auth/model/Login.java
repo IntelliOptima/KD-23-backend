@@ -1,6 +1,5 @@
 package com.example.kd23backend.auth.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User implements UserDetails {
+public class Login implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer loginId;
-    private String username;
+    private String email;
     private String password;
 
 
@@ -33,6 +32,11 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override
