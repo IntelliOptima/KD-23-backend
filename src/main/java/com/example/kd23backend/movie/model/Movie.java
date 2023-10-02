@@ -1,28 +1,51 @@
 package com.example.kd23backend.movie.model;
 
 
-import com.example.kd23backend.show.model.Show;
+import com.example.kd23backend.movie_show.model.MovieShow;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.Year;
-import java.util.List;
 import java.util.Set;
 
+/**
+ * {
+ *       "adult": false,
+ *       "backdrop_path": "/1syW9SNna38rSl9fnXwc9fP7POW.jpg",
+ *       "genre_ids": [
+ *         28,
+ *         878,
+ *         12
+ *       ],
+ *       "id": 565770,
+ *       "original_language": "en",
+ *       "original_title": "Blue Beetle",
+ *       "overview": "Recent college grad Jaime Reyes returns home full of aspirations for his future, only to find that home is not quite as he left it. As he searches to find his purpose in the world, fate intervenes when Jaime unexpectedly finds himself in possession of an ancient relic of alien biotechnology: the Scarab.",
+ *       "popularity": 3386.97,
+ *       "poster_path": "/mXLOHHc1Zeuwsl4xYKjKh2280oL.jpg",
+ *       "release_date": "2023-08-16",
+ *       "title": "Blue Beetle",
+ *       "video": false,
+ *       "vote_average": 7.1,
+ *       "vote_count": 1059
+ *     },
+ */
 
 @Entity
 @Data
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
+    @JsonProperty
     private String title;
 
-    private Year releaseYear;
+    private LocalDate releaseDate;
 
     private String poster;
 
@@ -52,6 +75,6 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.MERGE)
     @JsonBackReference
-    private Set<Show> shows;
+    private Set<MovieShow> movieShows;
 
 }

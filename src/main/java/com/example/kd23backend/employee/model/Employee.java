@@ -21,11 +21,11 @@ public class Employee {
     private LocalDate dateOfHiring;
 
     @ManyToOne()
-    @JoinColumn(name = "cinema_id", referencedColumnName = "cinema")
+    @JoinColumn(name = "cinema_id", referencedColumnName = "id")
     @JsonBackReference
     private Cinema cinema;
 
     @OneToOne
-    @MapsId
+    @JoinColumn(name = "login_id", referencedColumnName = "id")
     private Login login;
 }

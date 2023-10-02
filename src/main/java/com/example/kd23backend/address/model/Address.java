@@ -11,7 +11,7 @@ import lombok.Data;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String street;
 
@@ -21,5 +21,5 @@ public class Address {
 
     private String zip;
 
-    private int country;
+    private String country;
 }

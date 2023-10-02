@@ -1,11 +1,13 @@
 package com.example.kd23backend.program.model;
 
 import com.example.kd23backend.cinema.model.Cinema;
-import com.example.kd23backend.show.model.Show;
+import com.example.kd23backend.movie_show.model.MovieShow;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -13,12 +15,18 @@ import java.util.Set;
 public class Program {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
+    private LocalDate startDate;
 
+    private LocalDate endDate;
+
+    @ManyToOne
+    @JoinColumn(name = "cinema_id", referencedColumnName = "id")
+    @JsonBackReference
     private Cinema cinema;
 
     @OneToMany(mappedBy = "program")
     @JsonManagedReference
-    private Set<Show> shows;
+    private Set<MovieShow> movieShows;
 }

@@ -12,11 +12,11 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private LocalDate dayOfRegister;
 
     @OneToOne
-    @MapsId
+    @JoinColumn(name = "login_id", referencedColumnName = "id")
     private Login login;
 }

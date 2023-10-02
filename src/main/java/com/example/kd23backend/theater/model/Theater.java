@@ -2,7 +2,7 @@ package com.example.kd23backend.theater.model;
 
 import com.example.kd23backend.cinema.model.Cinema;
 import com.example.kd23backend.seat.model.Seat;
-import com.example.kd23backend.show.model.Show;
+import com.example.kd23backend.movie_show.model.MovieShow;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -17,9 +17,9 @@ import java.util.TreeSet;
 public class Theater {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private int seatsPerRow;
-    private int row;
+    private Integer id;
+    private Integer seatsPerRow;
+    private Integer totalRows;
 
 
     @OneToMany(mappedBy = "theater")
@@ -29,7 +29,7 @@ public class Theater {
 
     @OneToMany(mappedBy = "theater", cascade = CascadeType.MERGE)
     @JsonBackReference
-    private Set<Show> shows;
+    private Set<MovieShow> movieShows;
 
 
     @ManyToOne

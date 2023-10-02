@@ -1,4 +1,4 @@
-package com.example.kd23backend.show.model;
+package com.example.kd23backend.movie_show.model;
 
 import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.program.model.Program;
@@ -12,10 +12,12 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class Show {
+public class MovieShow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
+
+    private LocalDateTime startDateTime;
 
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
@@ -26,8 +28,6 @@ public class Show {
     @JoinColumn(name = "theatre_id", referencedColumnName = "id")
     @JsonManagedReference
     private Theater theater;
-
-    private LocalDateTime startDateTime;
 
     @ManyToOne
     @JoinColumn(name = "program_id", referencedColumnName = "id")

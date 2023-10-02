@@ -14,7 +14,7 @@ import java.util.Set;
 public class Genre {
 
     @Id
-    private int id; //API defines ID
+    private Integer id; //API defines ID
 
     private String name;
 
