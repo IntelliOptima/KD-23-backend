@@ -8,12 +8,14 @@
     import jakarta.annotation.Nullable;
     import jakarta.persistence.*;
     import lombok.Data;
+    import lombok.NoArgsConstructor;
     import org.springframework.beans.factory.annotation.Value;
 
     import java.util.Set;
 
     @Entity
     @Data
+    @NoArgsConstructor
     public class Cinema {
 
         @Id

@@ -10,42 +10,43 @@ import org.mapstruct.factory.Mappers;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface MovieMapper {
 
     MovieMapper INSTANCE = Mappers.getMapper(MovieMapper.class);
 
-    @Mapping(target = "releaseYear", expression = "java( Year.of(movie.getRelease_date().getYear()) )")
+    @Mapping(target = "releaseDate", source = "release_date")
     @Mapping(target = "poster", source = "poster_path")
     @Mapping(target = "description", source = "overview")
-    @Mapping(target = "genres", expression = "java( mapGenreIdsToGenreSet(movie.getGenre_ids()) )")
+    @Mapping(target = "voteRating", source = "vote_average")
+    @Mapping(target = "genres", expression = "java( mapGenres_ToGenreSet(movie.getGenres()) )")
+    @Mapping(target = "actors", expression = "java ( mapActors_To_ActorsSet(movie.getActors()) )")
+    @Mapping(target = "trailer", expression = "java ( mapTrailer_To_TrailerPath(movie.getVideos().getResults()) )")
     Movie dtoToEntity(MovieDTO movie);
 
-    default Set<Genre> mapGenreIdsToGenreSet(Genre[] genre_ids) {
+
+    default Set<Genre> mapGenres_To_GenreSet(List<Genre> receivedGenres) {
         Set<Genre> genres = new HashSet<>();
-        if (genre_ids != null) {
-            // You would have a service call to get the name,
-            // for example, genre.setName(genreService.getNameById(genre.getId()));
-            genres.addAll(Set.of(genre_ids));
+        if (receivedGenres != null) {
+            genres.addAll(receivedGenres);
+            System.out.println(genres);
         }
         return genres;
     }
 
-    default Set<Actor> mapActorsFromFetchToSetActors(Actor[] actorForMovie) {
+    default Set<Actor> mapActors_To_ActorsSet(List<Actor> receivedActors) {
         Set<Actor> actors = new HashSet<>();
-        if (actorForMovie != null && !(actorForMovie.length < 1)) {
-            //TODO implement logic for mapping over actors and add to Set<Actors> actors
-            actors.addAll(Set.of(actorForMovie));
+        if (receivedActors != null && !(receivedActors.isEmpty())) {
+            actors.addAll(receivedActors.subList(0, 5));
+            System.out.println("HECK YIR HER ER ACTOR: " + actors);
         }
         return actors;
     }
 
-    default Set<Movie> setTrailerForMovies(Set<Movie> movies, Map<Integer, String> trailers) {
-        return movies.stream().peek(movie -> {
-            String trailer = trailers.get(movie.getId());
-            if (trailer != null) {
-                movie.setTrailer(trailer);
-            }
-        }).collect(Collectors.toSet());
+    default String mapTrailer_To_TrailerPath(ResultDTO receivedTrailers) {
+        TrailerDTO trailerDTO = receivedTrailers.getTrailers().stream()
+                .filter(trailer -> trailer.getSite().equals("YouTube") && trailer.getType().equals("Trailer"))
+                .findFirst().orElse(null);
+        return trailerDTO != null ? "www.youtube.com/watch?v=" + trailerDTO.getKey() : "No Trailer Available";
     }
 }

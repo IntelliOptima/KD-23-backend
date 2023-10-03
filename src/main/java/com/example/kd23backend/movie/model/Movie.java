@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.Year;
@@ -37,8 +38,8 @@ import java.util.Set;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Movie {
-
     @Id
     private Integer id;
 
@@ -53,7 +54,9 @@ public class Movie {
 
     private String description;
 
-    private int playLengthInMinutes;
+    private int runtime;
+
+    private double voteRating;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(

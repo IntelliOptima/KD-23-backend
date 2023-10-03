@@ -3,11 +3,13 @@ package com.example.kd23backend.user.model;
 import com.example.kd23backend.auth.model.Login;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class User {
 
     @Id

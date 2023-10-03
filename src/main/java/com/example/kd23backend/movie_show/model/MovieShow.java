@@ -7,11 +7,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class MovieShow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
