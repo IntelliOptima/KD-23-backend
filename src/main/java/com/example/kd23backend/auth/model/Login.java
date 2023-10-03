@@ -1,5 +1,7 @@
 package com.example.kd23backend.auth.model;
 
+import com.example.kd23backend.employee.model.Employee;
+import com.example.kd23backend.user.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,13 +21,19 @@ public class Login implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer loginId;
+    private Integer id;
     private String email;
     private String password;
 
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToOne(mappedBy = "login")
+    private User user;
+
+    @OneToOne(mappedBy = "login")
+    private Employee employee;
 
 
 
