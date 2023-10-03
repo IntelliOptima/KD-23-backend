@@ -1,6 +1,7 @@
 package com.example.kd23backend.auth.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.example.kd23backend.employee.model.Employee;
+import com.example.kd23backend.user.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,23 +17,34 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User implements UserDetails {
+public class Login implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer loginId;
-    private String username;
+    private Integer id;
+    private String email;
     private String password;
 
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToOne(mappedBy = "login")
+    private User user;
+
+    @OneToOne(mappedBy = "login")
+    private Employee employee;
+
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override
