@@ -1,6 +1,5 @@
 package com.example.kd23backend.movie.service;
 
-import com.example.kd23backend.movie.mappers.MovieMapper;
 import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie.repository.MovieRepository;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,7 @@ public class MovieService implements IMovieService {
 
     private final MovieRepository movieRepository;
 
-    public MovieService(MovieMapper movieMapper, MovieRepository movieRepository) {
+    public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
     @Override

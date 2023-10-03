@@ -25,6 +25,7 @@ public class InitData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println("LETS FUCKING GOOOO");
         movieAPIService.fetchOneMovie();
 
         Login login = new Login();

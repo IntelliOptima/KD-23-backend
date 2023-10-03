@@ -1,16 +1,17 @@
 package com.example.kd23backend.movie.model;
 
 
+import com.example.kd23backend.movie.model.dtoObjects.MovieDTO;
 import com.example.kd23backend.movie_show.model.MovieShow;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.Set;
 
 /**
@@ -39,6 +40,7 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonDeserialize(using = MovieDTO.class)
 public class Movie {
     @Id
     private Integer id;

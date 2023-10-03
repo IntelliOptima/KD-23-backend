@@ -1,16 +1,13 @@
 package com.example.kd23backend.movie.service;
 
-import com.example.kd23backend.movie.mappers.MovieDTO;
-import com.example.kd23backend.movie.mappers.MovieMapper;
 import com.example.kd23backend.movie.model.Movie;
-import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -24,13 +21,11 @@ public class MovieAPIService implements IMovieAPIService {
 
     private final RestTemplate restTemplate;
 
-    @Autowired
-    MovieMapper movieMapper;
-
     public MovieAPIService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
+    /*
     public void fetchOneMovie() {
         ResponseEntity<MovieDTO> movieDTOResponse = restTemplate.exchange(
                 apiTest,
@@ -46,7 +41,23 @@ public class MovieAPIService implements IMovieAPIService {
         System.out.println(myMovie.getTrailer());
     }
 
+    */
 
+    public void fetchOneMovie() {
+        ResponseEntity<Movie> movieResponse = restTemplate.exchange(
+                apiTest,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<Movie>() {}
+        );
+
+        Movie movie = Optional.ofNullable(movieResponse.getBody()).orElse(null);
+
+        // Map Region and Kommune
+//        addresses.forEach(addressMapper::mapRelationships);
+  //      saveAddress(addresses);
+    //    return addresses;
+    }
 
     @Override
     public void fetchMovies() {
