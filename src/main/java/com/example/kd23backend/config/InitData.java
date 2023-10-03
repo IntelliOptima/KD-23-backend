@@ -25,9 +25,7 @@ public class InitData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("LETS FUCKING GOOOO");
-        movieAPIService.fetchOneMovie();
-
+        movieAPIService.fetchAllMovies();
         Login login = new Login();
         login.setEmail("test@test.dk");
         login.setPassword(applicationConfig.passwordEncoder().encode("Test1234"));

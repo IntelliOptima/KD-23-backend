@@ -9,13 +9,10 @@ import java.util.Set;
 
 @Service
 public interface IMovieAPIService {
-    void fetchMovies() throws IOException;
-    void fetchActors_And_AddToMovies(Set<Movie> movies);
+    void fetchAllMovies() throws IOException;
 
-    void fetchTrailers_And_AddToMovies(Set<Movie> movies);
+    Movie fetchOneMovie(Integer id);
 
-    void saveAllMovies(Set<Movie> movies);
-
-    void fetchOneMovie();
+    void saveAllMovies();
 
 }

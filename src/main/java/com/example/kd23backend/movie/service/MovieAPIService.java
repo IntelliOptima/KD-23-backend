@@ -1,80 +1,123 @@
 package com.example.kd23backend.movie.service;
 
+import com.example.kd23backend.movie.model.Actor;
 import com.example.kd23backend.movie.model.Movie;
+import com.example.kd23backend.movie.repository.ActorRepository;
+import com.example.kd23backend.movie.repository.GenreRepository;
+import com.example.kd23backend.movie.repository.MovieRepository;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Optional;
-import java.util.Set;
+
+import java.util.*;
 
 @Service
 public class MovieAPIService implements IMovieAPIService {
 
-    String apiTest = "https://api.themoviedb.org/3/movie/18?api_key=bf45e26b2cbe79b9bcb399d646313e59&append_to_response=videos,credits";
-    final String apiKey = "?api_key=bf45e26b2cbe79b9bcb399d646313e59";
-    final String appendToMovie = "append_to_response=videos,images,credits";
+    private final MovieRepository movieRepository;
+    private final ActorRepository actorRepository;
+    private final GenreRepository genreRepository;
+
     final String BASE_MOVIE_API_URL = "https://api.themoviedb.org/3/movie/";
-    final String bearer = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjQ1ZTI2YjJjYmU3OWI5YmNiMzk5ZDY0NjMxM2U1OSIsInN";
+    final String API_KEY = "?api_key=bf45e26b2cbe79b9bcb399d646313e59&";
+    final String APPEND_TO_MOVIE = "append_to_response=videos,credits";
+    final String BEARER = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjQ1ZTI2YjJjYmU3OWI5YmNiMzk5ZDY0NjMxM2U1OSIsInN1YiI6IjY1MTNlZDg0Y2FkYjZiMDJiZTU0OWYwNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VeSYNMtKMSrQskLEz_ZNU6f4p160eIGRYaB7m31hUHM\"";
 
     private final RestTemplate restTemplate;
 
-    public MovieAPIService(RestTemplate restTemplate) {
+    public MovieAPIService(RestTemplate restTemplate, MovieRepository movieRepository, ActorRepository actorRepository, GenreRepository genreRepository) {
         this.restTemplate = restTemplate;
+        this.movieRepository = movieRepository;
+        this.actorRepository = actorRepository;
+        this.genreRepository = genreRepository;
     }
 
-    /*
-    public void fetchOneMovie() {
-        ResponseEntity<MovieDTO> movieDTOResponse = restTemplate.exchange(
-                apiTest,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<MovieDTO>() {}
-        );
+    public void fetchAllMovies() {
+        Set<Movie> movies = new HashSet<>();
+        Set<Actor> actors = new HashSet<>();
 
-        Movie myMovie = movieMapper.dtoToEntity(movieDTOResponse.getBody());
-        System.out.println(movieDTOResponse.getBody());
-        System.out.println(myMovie.getGenres().toArray()[0]);
-        System.out.println(myMovie.getActors().toArray()[0]);
-        System.out.println(myMovie.getTrailer());
+        List<Boolean> invalidMovies = new ArrayList<>();
+        Integer i = 1;
+
+        Movie movie = fetchOneMovie(i);
+
+        while (invalidMovies.size() < 50 && i <= 100) {
+            if (movie == null || movie.getTitle().isEmpty()) {
+                invalidMovies.add(false);
+            } else {
+                movie.getActors().forEach(actor -> {
+                    if (!actorRepository.existsById(actor.getName())) {
+                        actorRepository.save(actor);
+                    }
+                });
+
+                movie.getGenres().forEach(genre -> {
+                    if (!genreRepository.existsById(genre.getId())) {
+                        genreRepository.save(genre);
+                    }
+                });
+                movieRepository.save(movie);
+                invalidMovies.clear();
+            }
+
+            i++;
+            System.out.println(i);
+            movie = fetchOneMovie(i);
+        }
     }
 
-    */
 
-    public void fetchOneMovie() {
-        ResponseEntity<Movie> movieResponse = restTemplate.exchange(
-                apiTest,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<Movie>() {}
-        );
+    public Movie fetchOneMovie(Integer id) {
+        try {
 
-        Movie movie = Optional.ofNullable(movieResponse.getBody()).orElse(null);
+            ResponseEntity<Movie> movieResponse = restTemplate.exchange(
+                    baseURLWithID(id),
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<Movie>() {
+                    }
+            );
 
-        // Map Region and Kommune
-//        addresses.forEach(addressMapper::mapRelationships);
-  //      saveAddress(addresses);
-    //    return addresses;
+            return movieResponse.getBody();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return null;
     }
 
-    @Override
-    public void fetchMovies() {
+
+    public void saveAllMovies() {
+        /*
+        for (Movie movie : fetchAllMovies()) {
+            Movie existingMovie = movieRepository.findById(movie.getId()).orElse(null);
+
+            if (existingMovie != null) {
+                // Handle actors
+                for (Actor actor : movie.getActors()) {
+                    existingMovie.getActors().add(actor);
+                }
+                movieRepository.save(existingMovie);
+            } else {
+                movieRepository.save(movie);
+            }
+        }
+         */
     }
 
-    @Override
-    public void fetchActors_And_AddToMovies(Set<Movie> movies) {
 
+
+
+    // --------------------------
+    public Optional<Movie> findMovieWithActorsAndGenresById(Integer id) {
+        return movieRepository.findByIdWithActorsAndGenres(id);
     }
 
-    @Override
-    public void fetchTrailers_And_AddToMovies(Set<Movie> movies) {
-
-    }
-
-    @Override
-    public void saveAllMovies(Set<Movie> movies) {
-
+    private String baseURLWithID(Integer id) {
+        return BASE_MOVIE_API_URL + id + API_KEY + APPEND_TO_MOVIE;
     }
 }
