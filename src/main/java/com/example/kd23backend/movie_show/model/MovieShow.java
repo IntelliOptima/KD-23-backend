@@ -19,6 +19,8 @@ public class MovieShow {
 
     private LocalDateTime startDateTime;
 
+    private Integer price;
+
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     @JsonManagedReference
