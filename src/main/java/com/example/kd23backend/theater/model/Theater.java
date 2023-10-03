@@ -3,7 +3,7 @@ package com.example.kd23backend.theater.model;
 import com.example.kd23backend.cinema.model.Cinema;
 import com.example.kd23backend.seat.model.Seat;
 import com.example.kd23backend.movie_show.model.MovieShow;
-import com.example.kd23backend.theater.model.interfaces.PricingStrategy;
+import com.example.kd23backend.theater.model.interfaces.TheaterImplementationStrategy;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -45,9 +45,10 @@ public abstract class Theater {
     }
 
     @Transient
-    protected PricingStrategy pricingStrategy;
+    protected TheaterImplementationStrategy implementationStrategy;
 
     public double getSeatPrice(Seat seat) {
-        return pricingStrategy.calculateSeatPrice(seat);
+        return implementationStrategy.calculateSeatPrice(seat);
     }
+
 }

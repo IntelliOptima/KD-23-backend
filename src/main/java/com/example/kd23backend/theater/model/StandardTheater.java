@@ -1,6 +1,6 @@
 package com.example.kd23backend.theater.model;
 
-import com.example.kd23backend.theater.model.util.standard_theater.StandardPricingStrategy;
+import com.example.kd23backend.theater.model.util.standard_theater.StandardImplementationStrategy;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 public class StandardTheater extends Theater {
 
     public StandardTheater() {
-        this.pricingStrategy = new StandardPricingStrategy();
+        this.implementationStrategy = new StandardImplementationStrategy();
     }
 
 }
