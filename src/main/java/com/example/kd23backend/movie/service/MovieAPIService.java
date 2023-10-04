@@ -6,6 +6,7 @@ import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie.repository.ActorRepository;
 import com.example.kd23backend.movie.repository.GenreRepository;
 import com.example.kd23backend.movie.repository.MovieRepository;
+import jakarta.transaction.Transactional;
 import org.json.JSONObject;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -42,7 +43,12 @@ public class MovieAPIService implements IMovieAPIService {
         this.genreRepository = genreRepository;
     }
 
+    @Transactional
     public void fetchAllMovies() {
+        List<Movie> movies = new ArrayList<>();
+        List<Actor> actors = new ArrayList<>();
+        List<Genre> genres = new ArrayList<>();
+
         Set<Integer> existingMoviesIds = movieRepository.findAllIds();
         Set<String> existingActorNames = actorRepository.findAllNames();
         Set<Integer> existingGenreIds = genreRepository.findAllIds();
@@ -51,30 +57,41 @@ public class MovieAPIService implements IMovieAPIService {
             String line;
             while ((line = br.readLine()) != null) {
                 JSONObject json = new JSONObject(line);
-                Integer movieId = json.getInt("id");
+                int movieId = json.getInt("id");
 
+                if (movieId < 7500) {
+                    continue;
+                }
+
+                if (movieId == 20000) {
+                    break;
+                }
                 Movie movie = fetchOneMovie(movieId);
 
                 for (Actor actor : movie.getActors()) {
                     if (!existingActorNames.contains(actor.getName())) {
-                        actorRepository.save(actor);
+                        actors.add(actor);
                         existingActorNames.add(actor.getName());
                     }
                 }
                 for (Genre genre : movie.getGenres()) {
                     if (!existingGenreIds.contains(genre.getId())) {
-                        genreRepository.save(genre);
+                        genres.add(genre);
                         existingGenreIds.add(genre.getId());
                     }
                 }
 
                 if (!existingMoviesIds.contains(movie.getId())) {
-                    movieRepository.save(movie);
+                    movies.add(movie);
                     existingMoviesIds.add(movieId);
                 }
 
                 System.out.println("Movie: " + movieId + " has been added!");
             }
+            actorRepository.saveAll(actors);
+            genreRepository.saveAll(genres);
+            movieRepository.saveAll(movies);
+
 
         } catch (Exception e) {
             e.printStackTrace();

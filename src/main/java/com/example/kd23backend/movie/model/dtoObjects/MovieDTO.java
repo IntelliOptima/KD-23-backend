@@ -53,7 +53,8 @@ public class MovieDTO extends StdDeserializer<Movie> {
 
         movie.setId(movieNode.path("id").asInt());
         movie.setTitle(movieNode.path("title").textValue());
-        movie.setReleaseDate(LocalDate.parse(movieNode.path("release_date").textValue(), formatter));
+
+        movie.setReleaseDate(getReleaseDate(movieNode.path("release_date").textValue(), formatter));
         movie.setRuntime(movieNode.path("runtime").asInt());
         movie.setDescription(movieNode.path("overview").textValue());
         movie.setAdult(movieNode.path("adult").asBoolean());
@@ -64,6 +65,10 @@ public class MovieDTO extends StdDeserializer<Movie> {
         movie.setTrailer(getTrailer(movieNode.path("videos").path("results")));
 
         return movie;
+    }
+
+    private LocalDate getReleaseDate(String releaseDate, DateTimeFormatter formatter) {
+        return releaseDate.isEmpty() ? null : LocalDate.parse(releaseDate, formatter);
     }
 
     private Set<Actor> getActors(JsonNode actorsNode) throws JsonProcessingException {
