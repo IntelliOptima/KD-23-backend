@@ -3,17 +3,11 @@
 
     import com.example.kd23backend.movie.model.dtoObjects.MovieDTO;
     import com.example.kd23backend.movie_show.model.MovieShow;
-    import com.fasterxml.jackson.annotation.JsonBackReference;
-    import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-    import com.fasterxml.jackson.annotation.JsonManagedReference;
-    import com.fasterxml.jackson.annotation.JsonProperty;
+    import com.fasterxml.jackson.annotation.*;
     import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
     import jakarta.persistence.*;
     import lombok.Data;
     import lombok.NoArgsConstructor;
-    import org.hibernate.annotations.BatchSize;
-    import org.hibernate.annotations.Fetch;
-    import org.hibernate.annotations.FetchMode;
 
     import java.time.LocalDate;
     import java.util.Set;
@@ -42,6 +36,20 @@
      */
 
     @Entity
+    @NamedEntityGraph(
+            name = "movieOnly",
+            attributeNodes = {
+                    @NamedAttributeNode("id"),
+                    @NamedAttributeNode("title"),
+                    @NamedAttributeNode("isAdult"),
+                    @NamedAttributeNode("releaseDate"),
+                    @NamedAttributeNode("poster"),
+                    @NamedAttributeNode("trailer"),
+                    @NamedAttributeNode("description"),
+                    @NamedAttributeNode("runtime"),
+                    @NamedAttributeNode("voteRating"),
+            }
+    )
     @Data
     @NoArgsConstructor
     @JsonDeserialize(using = MovieDTO.class)
@@ -67,8 +75,7 @@
 
         private double voteRating;
 
-        @ManyToMany( fetch = FetchType.LAZY)
-        @BatchSize(size = 20)
+        @ManyToMany
         @JoinTable(
                 name = "movie_actor",
                 joinColumns = @JoinColumn(name = "movie_id"),
@@ -77,8 +84,7 @@
         @JsonManagedReference
         private Set<Actor> actors;
 
-        @ManyToMany( fetch = FetchType.LAZY)
-        @BatchSize(size = 20)
+        @ManyToMany
         @JoinTable(
                 name = "movie_genre",
                 joinColumns = @JoinColumn(name = "movie_id"),
@@ -88,7 +94,7 @@
         private Set<Genre> genres;
 
         @OneToMany(mappedBy = "movie", cascade = CascadeType.MERGE)
-        @JsonBackReference
+        @JsonBackReference(value = "movie-show")
         private Set<MovieShow> movieShows;
 
     }

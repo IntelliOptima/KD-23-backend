@@ -45,7 +45,7 @@ public class Genre {
         this.movies = movies;
     }
 
-    @ManyToMany(mappedBy = "genres", cascade = CascadeType.MERGE)
-    @JsonBackReference
+    @ManyToMany(mappedBy = "genres")
+    @JsonBackReference(value = "movie-genre")
     private Set<Movie> movies;
 }

@@ -10,31 +10,15 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Entity
+@Data
+@NoArgsConstructor
 public class Actor {
     @Id
     @JsonProperty
     private String name;
 
-    @ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY)
-    @JsonBackReference
+    @ManyToMany(mappedBy = "actors")
+    @JsonBackReference(value = "movie-actor")
     private Set<Movie> movies;
 
-    public Actor() {
-
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Movie> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(Set<Movie> movies) {
-        this.movies = movies;
-    }
 }

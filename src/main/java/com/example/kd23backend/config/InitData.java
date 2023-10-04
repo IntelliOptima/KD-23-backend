@@ -6,6 +6,7 @@ import com.example.kd23backend.auth.model.Role;
 import com.example.kd23backend.auth.repository.UserRepo;
 import com.example.kd23backend.movie.service.IMovieAPIService;
 import com.example.kd23backend.movie.service.MovieAPIService;
+import com.example.kd23backend.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -23,15 +24,19 @@ public class InitData implements CommandLineRunner {
     @Autowired
     MovieAPIService movieAPIService;
 
+    @Autowired
+    MovieService movieService;
+
     @Override
     public void run(String... args) throws Exception {
-        movieAPIService.fetchAllMovies();
-        Login login = new Login();
-        login.setEmail("test@test.dk");
-        login.setPassword(applicationConfig.passwordEncoder().encode("Test1234"));
-        login.setRole(Role.USER);
-        userRepo.save(login);
-
-
+        //movieAPIService.fetchAllMovies();
+        //System.out.println(movieService.findAllByPosterIsNot("movie has no trailer"));
+        System.out.println(movieService.findByTitle("8 Mile"));
+        //System.out.println(movieService.getSpecificMovie(7279));
+       // Login login = new Login();
+        //login.setEmail("test@test.dk");
+        //login.setPassword(applicationConfig.passwordEncoder().encode("Test1234"));
+        //login.setRole(Role.USER);
+        //userRepo.save(login);
     }
 }
