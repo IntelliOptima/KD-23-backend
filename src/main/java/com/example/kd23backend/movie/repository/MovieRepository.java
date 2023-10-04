@@ -8,12 +8,12 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
-    @EntityGraph(attributePaths = {"actors", "genres"})
-    @Query("SELECT m FROM Movie m WHERE m.id = :id")
-    Optional<Movie> findByIdWithActorsAndGenres(@Param("id") Integer id);
+    @Query("SELECT m.id FROM Movie m")
+    Set<Integer> findAllIds();
 
 
 }

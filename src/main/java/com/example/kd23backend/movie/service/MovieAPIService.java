@@ -1,19 +1,24 @@
 package com.example.kd23backend.movie.service;
 
 import com.example.kd23backend.movie.model.Actor;
+import com.example.kd23backend.movie.model.Genre;
 import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie.repository.ActorRepository;
 import com.example.kd23backend.movie.repository.GenreRepository;
 import com.example.kd23backend.movie.repository.MovieRepository;
+import org.json.JSONObject;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Service
@@ -27,7 +32,7 @@ public class MovieAPIService implements IMovieAPIService {
     final String API_KEY = "?api_key=bf45e26b2cbe79b9bcb399d646313e59&";
     final String APPEND_TO_MOVIE = "append_to_response=videos,credits";
     final String BEARER = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjQ1ZTI2YjJjYmU3OWI5YmNiMzk5ZDY0NjMxM2U1OSIsInN1YiI6IjY1MTNlZDg0Y2FkYjZiMDJiZTU0OWYwNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VeSYNMtKMSrQskLEz_ZNU6f4p160eIGRYaB7m31hUHM\"";
-
+    InputStream inputStream = getClass().getResourceAsStream("/movie_ids_10_03_2023.json");
     private final RestTemplate restTemplate;
 
     public MovieAPIService(RestTemplate restTemplate, MovieRepository movieRepository, ActorRepository actorRepository, GenreRepository genreRepository) {
@@ -38,36 +43,41 @@ public class MovieAPIService implements IMovieAPIService {
     }
 
     public void fetchAllMovies() {
-        Set<Movie> movies = new HashSet<>();
-        Set<Actor> actors = new HashSet<>();
+        Set<Integer> existingMoviesIds = movieRepository.findAllIds();
+        Set<String> existingActorNames = actorRepository.findAllNames();
+        Set<Integer> existingGenreIds = genreRepository.findAllIds();
 
-        List<Boolean> invalidMovies = new ArrayList<>();
-        Integer i = 1;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                JSONObject json = new JSONObject(line);
+                Integer movieId = json.getInt("id");
 
-        Movie movie = fetchOneMovie(i);
+                Movie movie = fetchOneMovie(movieId);
 
-        while (invalidMovies.size() < 50 && i <= 100) {
-            if (movie == null || movie.getTitle().isEmpty()) {
-                invalidMovies.add(false);
-            } else {
-                movie.getActors().forEach(actor -> {
-                    if (!actorRepository.existsById(actor.getName())) {
+                for (Actor actor : movie.getActors()) {
+                    if (!existingActorNames.contains(actor.getName())) {
                         actorRepository.save(actor);
+                        existingActorNames.add(actor.getName());
                     }
-                });
-
-                movie.getGenres().forEach(genre -> {
-                    if (!genreRepository.existsById(genre.getId())) {
+                }
+                for (Genre genre : movie.getGenres()) {
+                    if (!existingGenreIds.contains(genre.getId())) {
                         genreRepository.save(genre);
+                        existingGenreIds.add(genre.getId());
                     }
-                });
-                movieRepository.save(movie);
-                invalidMovies.clear();
+                }
+
+                if (!existingMoviesIds.contains(movie.getId())) {
+                    movieRepository.save(movie);
+                    existingMoviesIds.add(movieId);
+                }
+
+                System.out.println("Movie: " + movieId + " has been added!");
             }
 
-            i++;
-            System.out.println(i);
-            movie = fetchOneMovie(i);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -107,14 +117,6 @@ public class MovieAPIService implements IMovieAPIService {
             }
         }
          */
-    }
-
-
-
-
-    // --------------------------
-    public Optional<Movie> findMovieWithActorsAndGenresById(Integer id) {
-        return movieRepository.findByIdWithActorsAndGenres(id);
     }
 
     private String baseURLWithID(Integer id) {
