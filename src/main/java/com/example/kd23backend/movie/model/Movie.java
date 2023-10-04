@@ -8,32 +8,15 @@
     import jakarta.persistence.*;
     import lombok.Data;
     import lombok.NoArgsConstructor;
+    import org.hibernate.annotations.BatchSize;
+    import org.hibernate.annotations.Fetch;
+    import org.hibernate.annotations.FetchMode;
 
     import java.time.LocalDate;
     import java.util.Set;
-
-    /**
-     * {
-     *       "adult": false,
-     *       "backdrop_path": "/1syW9SNna38rSl9fnXwc9fP7POW.jpg",
-     *       "genre_ids": [
-     *         28,
-     *         878,
-     *         12
-     *       ],
-     *       "id": 565770,
-     *       "original_language": "en",
-     *       "original_title": "Blue Beetle",
-     *       "overview": "Recent college grad Jaime Reyes returns home full of aspirations for his future, only to find that home is not quite as he left it. As he searches to find his purpose in the world, fate intervenes when Jaime unexpectedly finds himself in possession of an ancient relic of alien biotechnology: the Scarab.",
-     *       "popularity": 3386.97,
-     *       "poster_path": "/mXLOHHc1Zeuwsl4xYKjKh2280oL.jpg",
-     *       "release_date": "2023-08-16",
-     *       "title": "Blue Beetle",
-     *       "video": false,
-     *       "vote_average": 7.1,
-     *       "vote_count": 1059
-     *     },
-     */
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
 
     @Entity
     @NamedEntityGraph(
@@ -75,7 +58,7 @@
 
         private double voteRating;
 
-        @ManyToMany
+        @ManyToMany()
         @JoinTable(
                 name = "movie_actor",
                 joinColumns = @JoinColumn(name = "movie_id"),
@@ -84,7 +67,7 @@
         @JsonManagedReference
         private Set<Actor> actors;
 
-        @ManyToMany
+        @ManyToMany()
         @JoinTable(
                 name = "movie_genre",
                 joinColumns = @JoinColumn(name = "movie_id"),
@@ -97,4 +80,33 @@
         @JsonBackReference(value = "movie-show")
         private Set<MovieShow> movieShows;
 
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((id == null) ? 0 : id.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            Movie other = (Movie) obj;
+            if (id == null) {
+                if (other.id != null) {
+                    return false;
+                }
+            } else if (!id.equals(other.id)) {
+                return false;
+            }
+            return true;
+        }
     }
