@@ -4,6 +4,7 @@ import com.example.kd23backend.auth.config.ApplicationConfig;
 import com.example.kd23backend.auth.model.Login;
 import com.example.kd23backend.auth.model.Role;
 import com.example.kd23backend.auth.repository.UserRepo;
+import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie.service.IMovieAPIService;
 import com.example.kd23backend.movie.service.MovieAPIService;
 import com.example.kd23backend.movie.service.MovieService;
@@ -31,7 +32,8 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         //movieAPIService.fetchAllMovies();
         //System.out.println(movieService.findAllByPosterIsNot("movie has no trailer"));
-        System.out.println(movieService.findByTitle("8 Mile"));
+        Movie fetchedMovie = movieService.findByTitle("star wars");
+        System.out.println(fetchedMovie != null);
         //System.out.println(movieService.getSpecificMovie(7279));
        // Login login = new Login();
         //login.setEmail("test@test.dk");

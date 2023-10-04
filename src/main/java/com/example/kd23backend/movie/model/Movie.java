@@ -6,6 +6,7 @@
     import com.fasterxml.jackson.annotation.*;
     import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
     import jakarta.persistence.*;
+    import lombok.AllArgsConstructor;
     import lombok.Data;
     import lombok.NoArgsConstructor;
     import org.hibernate.annotations.BatchSize;
@@ -40,7 +41,6 @@
         @Id
         private Integer id;
 
-        @JsonProperty
         private String title;
 
         private boolean isAdult;
@@ -109,4 +109,6 @@
             }
             return true;
         }
+
+
     }
