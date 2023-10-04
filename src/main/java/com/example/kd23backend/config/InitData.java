@@ -30,10 +30,10 @@ public class InitData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //movieAPIService.fetchAllMovies();
+        movieAPIService.fetchAllMovies();
         //System.out.println(movieService.findAllByPosterIsNot("movie has no trailer"));
-        Movie fetchedMovie = movieService.findByTitle("star wars");
-        System.out.println(fetchedMovie != null);
+//        Movie fetchedMovie = movieService.findByTitle("star wars");
+//        System.out.println(fetchedMovie.getTitle());
         //System.out.println(movieService.getSpecificMovie(7279));
        // Login login = new Login();
         //login.setEmail("test@test.dk");

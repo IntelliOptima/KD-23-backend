@@ -2,7 +2,9 @@ package com.example.kd23backend.movie.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +16,8 @@ import java.util.Set;
 @NoArgsConstructor
 public class Actor {
     @Id
-    @JsonProperty
+    private int id;
+
     private String name;
 
     @ManyToMany(mappedBy = "actors")

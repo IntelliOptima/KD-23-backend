@@ -13,6 +13,5 @@ public interface IMovieAPIService {
 
     Movie fetchOneMovie(Integer id);
 
-    void saveAllMovies();
 
 }

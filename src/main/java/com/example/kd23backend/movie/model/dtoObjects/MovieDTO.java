@@ -75,6 +75,7 @@ public class MovieDTO extends StdDeserializer<Movie> {
         return StreamSupport.stream(actorsNode.spliterator(), false)
                 .map(actorNode -> {
                     Actor actor = new Actor();
+                    actor.setId(actorNode.path("id").asInt());
                     actor.setName(actorNode.path("name").textValue());
                     return actor;
                 }).limit(5).collect(Collectors.toSet());
