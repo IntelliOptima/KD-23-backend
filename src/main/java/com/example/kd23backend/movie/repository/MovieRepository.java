@@ -1,5 +1,7 @@
 package com.example.kd23backend.movie.repository;
 
+import com.example.kd23backend.movie.model.Actor;
+import com.example.kd23backend.movie.model.Genre;
 import com.example.kd23backend.movie.model.Movie;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,14 +20,13 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
     List<Movie> findAllByTitleContains(String title);
 
-    @EntityGraph(value = "Movie.withActors", type = EntityGraph.EntityGraphType.LOAD)
     Optional<Movie> findByTitle(String title);
 
-    @Query("SELECT DISTINCT m FROM Movie m JOIN m.genres g WHERE LOWER(g.name) LIKE ?1")
-    List<Movie> findAllByGenresContainingKeywordIgnoreCase(String keyword);
-    List<Movie> findAllByActorsContaining(String actor);
-
     List<Movie> findByReleaseDate(LocalDate releaseDate);
+
+    List<Movie> findAllByActorsContaining(Actor actor);
+
+    List<Movie> findAllByGenresContaining(Genre genre);
 
     List<Movie> findAllByIsAdultTrue();
 

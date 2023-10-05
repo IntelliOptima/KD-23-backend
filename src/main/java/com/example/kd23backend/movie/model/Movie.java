@@ -1,7 +1,7 @@
 package com.example.kd23backend.movie.model;
 
 
-import com.example.kd23backend.movie.model.dtoObjects.MovieDTO;
+import com.example.kd23backend.movie.model.dtoObjects.MovieDeserializer;
 import com.example.kd23backend.movie_show.model.MovieShow;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -16,7 +16,8 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonDeserialize(using = MovieDTO.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonDeserialize(using = MovieDeserializer.class)
 public class Movie {
     @Id
     private Integer id;
@@ -44,6 +45,7 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
+    @JsonManagedReference
     private Set<Actor> actors;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -53,12 +55,11 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     @JsonManagedReference(value = "genres")
-    @JsonIgnore
     private Set<Genre> genres;
+
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.MERGE)
     @JsonBackReference(value = "movie-show")
-    @JsonIgnore
     private Set<MovieShow> movieShows;
 
 }

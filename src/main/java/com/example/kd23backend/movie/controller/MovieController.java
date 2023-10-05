@@ -19,7 +19,7 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping("/movie")
 public class MovieController {
-    private IMovieService movieService;
+    private final IMovieService movieService;
     public MovieController(IMovieService movieService) {
         this.movieService = movieService;
     }
@@ -48,17 +48,19 @@ public class MovieController {
         return movies.isEmpty() ? new ResponseEntity(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(movies);
     }
 
-    @RequestMapping("/all-where-genre-contains/{genre}")
-    public ResponseEntity<List<Movie>> getAllMoviesByGenresContains(String genre) {
-        List<Movie> movies = movieService.findAllByGenresContainingKeywordIgnoreCase(genre);
-        return movies.isEmpty() ? new ResponseEntity(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(movies);
-    }
-
-    @RequestMapping("/all-where-actor-contains/{actor}")
-    public ResponseEntity<List<Movie>> getAllMoviesByActorsContains(String actor) {
-        List<Movie> movies = movieService.findAllByActorsContains(actor);
-        return movies.isEmpty() ? new ResponseEntity(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(movies);
-    }
+//    @RequestMapping("/all-where-genre-contains/{genre}")
+//    public ResponseEntity<List<Movie>> getAllMoviesByGenresContains(String genre) {
+//
+//        List<Movie> movies = movieService.findAllByGenresContaining(genre);
+//        return movies.isEmpty() ? new ResponseEntity(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(movies);
+//    }
+//
+//    @RequestMapping("/all-where-actor-contains/{actor}")
+//    public ResponseEntity<List<Movie>> getAllMoviesByActorsContains(String actor) {
+//
+//        List<Movie> movies = movieService.findAllByActorsContaining(actor);
+//        return movies.isEmpty() ? new ResponseEntity(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(movies);
+//    }
 
     @GetMapping("/release-date/{release-date}")
     public ResponseEntity<List<Movie>> getMoviesByReleaseDate(@PathVariable("release-date") String releaseDateStr) {

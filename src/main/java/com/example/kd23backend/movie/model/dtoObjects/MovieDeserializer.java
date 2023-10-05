@@ -15,7 +15,6 @@ import lombok.Setter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,7 +22,7 @@ import java.util.stream.StreamSupport;
 
 @Getter
 @Setter
-public class MovieDTO extends StdDeserializer<Movie> {
+public class MovieDeserializer extends StdDeserializer<Movie> {
 
     private int id;
     private boolean adult;
@@ -37,16 +36,16 @@ public class MovieDTO extends StdDeserializer<Movie> {
     private double vote_average;
 
     // Constructors -----------------------------------
-    public MovieDTO() {
+    public MovieDeserializer() {
         this(null);
     }
-    protected MovieDTO(Class<?> vc) {
+    protected MovieDeserializer(Class<?> vc) {
         super(vc);
     }
 
     // Serializer ---------------------------------------
     @Override
-    public Movie deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
+    public Movie deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         JsonNode movieNode =  jsonParser.getCodec().readTree(jsonParser);
         Movie movie = new Movie();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -71,7 +70,7 @@ public class MovieDTO extends StdDeserializer<Movie> {
         return releaseDate.isEmpty() ? null : LocalDate.parse(releaseDate, formatter);
     }
 
-    private Set<Actor> getActors(JsonNode actorsNode) throws JsonProcessingException {
+    private Set<Actor> getActors(JsonNode actorsNode) {
         return StreamSupport.stream(actorsNode.spliterator(), false)
                 .map(actorNode -> {
                     Actor actor = new Actor();

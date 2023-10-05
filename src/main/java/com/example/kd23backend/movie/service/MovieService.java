@@ -1,5 +1,7 @@
 package com.example.kd23backend.movie.service;
 
+import com.example.kd23backend.movie.model.Actor;
+import com.example.kd23backend.movie.model.Genre;
 import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie.repository.MovieRepository;
 import org.springframework.data.domain.Page;
@@ -41,14 +43,15 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public List<Movie> findAllByGenresContainingKeywordIgnoreCase(String genre) {
-        return movieRepository.findAllByGenresContainingKeywordIgnoreCase(genre);
+    public List<Movie> findAllByActorsContaining(Actor actor) {
+        return movieRepository.findAllByActorsContaining(actor);
     }
 
     @Override
-    public List<Movie> findAllByActorsContains(String actor) {
-        return movieRepository.findAllByActorsContaining(actor);
+    public List<Movie> findAllByGenresContaining(Genre genre) {
+        return movieRepository.findAllByGenresContaining(genre);
     }
+
 
     @Override
     public List<Movie> findByReleaseDate(LocalDate releaseDate) {

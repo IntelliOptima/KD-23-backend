@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-public class ActorDTO implements Std {
+public class ActorDTO {
     private Integer id;
     private String name;
 }

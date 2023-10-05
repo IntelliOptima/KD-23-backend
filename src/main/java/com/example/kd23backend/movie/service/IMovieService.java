@@ -1,6 +1,8 @@
 package com.example.kd23backend.movie.service;
 
 
+import com.example.kd23backend.movie.model.Actor;
+import com.example.kd23backend.movie.model.Genre;
 import com.example.kd23backend.movie.model.Movie;
 
 import java.time.LocalDate;
@@ -12,8 +14,6 @@ public interface IMovieService {
     Optional<Movie> getSpecificMovie(Integer id);
 
     List<Movie> findAllByTitleContains(String title);
-    List<Movie> findAllByGenresContainingKeywordIgnoreCase(String genre);
-    List<Movie> findAllByActorsContains(String actor);
 
     List<Movie> findByReleaseDate(LocalDate releaseDate);
 
@@ -21,6 +21,10 @@ public interface IMovieService {
     List<Movie> findAllByIsAdultFalse();
 
     Optional<Movie> findByTitle(String string);
+
+    List<Movie> findAllByActorsContaining(Actor actor);
+
+    List<Movie> findAllByGenresContaining(Genre genre);
 
     List<Movie> findAllByPosterIsNot(String poster);
     List<Movie> findAllByTrailerIsNot(String poster);
