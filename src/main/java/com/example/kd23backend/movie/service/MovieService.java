@@ -3,6 +3,8 @@ package com.example.kd23backend.movie.service;
 import com.example.kd23backend.movie.model.Actor;
 import com.example.kd23backend.movie.model.Genre;
 import com.example.kd23backend.movie.model.Movie;
+import com.example.kd23backend.movie.repository.ActorRepository;
+import com.example.kd23backend.movie.repository.GenreRepository;
 import com.example.kd23backend.movie.repository.MovieRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,11 +15,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MovieService implements IMovieService {
+public class MovieService implements IMovieService, IGenreService, IActorService {
     private final MovieRepository movieRepository;
+    private final ActorRepository actorRepository;
+    private final GenreRepository genreRepository;
 
-    public MovieService(MovieRepository movieRepository) {
+    public MovieService(MovieRepository movieRepository, ActorRepository actorRepository, GenreRepository genreRepository) {
         this.movieRepository = movieRepository;
+        this.actorRepository = actorRepository;
+        this.genreRepository = genreRepository;
     }
 
     @Override
@@ -34,7 +40,7 @@ public class MovieService implements IMovieService {
 
     @Override
     public List<Movie> findAllByTitleContains(String title) {
-        return movieRepository.findAllByTitleContains(title);
+        return movieRepository.findAllByTitleContainsIgnoreCase(title);
     }
 
     @Override
@@ -86,5 +92,30 @@ public class MovieService implements IMovieService {
     @Override
     public List<Movie> findAllByVoteRatingIsGreaterThan(Double voteRating) {
         return movieRepository.findAllByVoteRatingIsGreaterThan(voteRating);
+    }
+
+    @Override
+    public Genre findGenreById(int genreId) {
+        return genreRepository.findById(genreId);
+    }
+
+    @Override
+    public List<Genre> findGenreByNameContainingIgnoreCase(String genreName) {
+        return genreRepository.findByNameContainingIgnoreCase(genreName);
+    }
+
+    @Override
+    public List<Genre> findAllGenresByMoviesContaining(Integer movieId) {
+        return genreRepository.findAllByMoviesContaining(movieId);
+    }
+
+    @Override
+    public List<Actor> findActorByNameContainingIgnoreCase(String actorName) {
+        return actorRepository.findByNameContainingIgnoreCase(actorName);
+    }
+
+    @Override
+    public List<Actor> findAllActorsByMoviesContaining(Integer movieId) {
+        return actorRepository.findAllByMoviesContaining(movieId);
     }
 }

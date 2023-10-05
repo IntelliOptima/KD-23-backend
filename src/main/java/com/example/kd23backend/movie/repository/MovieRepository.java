@@ -3,10 +3,8 @@ package com.example.kd23backend.movie.repository;
 import com.example.kd23backend.movie.model.Actor;
 import com.example.kd23backend.movie.model.Genre;
 import com.example.kd23backend.movie.model.Movie;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,7 +16,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query("SELECT m.id FROM Movie m")
     Set<Integer> findAllIds();
 
-    List<Movie> findAllByTitleContains(String title);
+    List<Movie> findAllByTitleContainsIgnoreCase(String title);
 
     Optional<Movie> findByTitle(String title);
 

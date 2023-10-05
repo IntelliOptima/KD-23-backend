@@ -85,7 +85,7 @@ public class MovieAPIService implements IMovieAPIService {
     }
 
 
-    public void skipFirstFourMovies(BufferedReader br) throws IOException {
+    private void skipFirstFourMovies(BufferedReader br) throws IOException {
         for (int i = 0; i < 5; i++) {
             br.readLine();
         }

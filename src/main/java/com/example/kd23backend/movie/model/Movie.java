@@ -54,10 +54,11 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    @JsonManagedReference(value = "genres")
+    @JsonManagedReference
     private Set<Genre> genres;
 
 
+    @Transient
     @OneToMany(mappedBy = "movie", cascade = CascadeType.MERGE)
     @JsonBackReference(value = "movie-show")
     private Set<MovieShow> movieShows;
