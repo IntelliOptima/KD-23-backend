@@ -1,4 +1,4 @@
-package com.example.kd23backend.movie.model.dtoObjects;
+package com.example.kd23backend.movie.model.serializers;
 
 import com.example.kd23backend.movie.model.Actor;
 import com.example.kd23backend.movie.model.Genre;

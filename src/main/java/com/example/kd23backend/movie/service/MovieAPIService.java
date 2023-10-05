@@ -46,7 +46,7 @@ public class MovieAPIService implements IMovieAPIService {
                 JSONObject json = new JSONObject(line);
                 int movieId = json.getInt("id");
 
-                if (movieId > 500) {
+                if (movieId > 50000) {
                     break;
                 }
 

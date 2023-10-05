@@ -1,7 +1,7 @@
 package com.example.kd23backend.movie.model;
 
 
-import com.example.kd23backend.movie.model.dtoObjects.MovieDeserializer;
+import com.example.kd23backend.movie.model.serializers.MovieDeserializer;
 import com.example.kd23backend.movie_show.model.MovieShow;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
