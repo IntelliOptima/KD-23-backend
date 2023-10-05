@@ -1,10 +1,11 @@
 package com.example.kd23backend.movie.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.example.kd23backend.movie.model.dtoObjects.ActorDTO;
+import com.example.kd23backend.movie.model.dtoObjects.MovieDTO;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonSerialize(using = ActorSerializer.class)
 public class Actor {
     @Id
     private int id;

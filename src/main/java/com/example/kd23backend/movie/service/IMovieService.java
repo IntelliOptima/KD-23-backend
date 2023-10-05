@@ -5,21 +5,25 @@ import com.example.kd23backend.movie.model.Movie;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface IMovieService {
     List<Movie> getAllMovies();
-    Movie getSpecificMovie(Integer id);
+    Optional<Movie> getSpecificMovie(Integer id);
 
-    List<Movie> findAllByTitle(String title);
+    List<Movie> findAllByTitleContains(String title);
+    List<Movie> findAllByGenresContainingKeywordIgnoreCase(String genre);
+    List<Movie> findAllByActorsContains(String actor);
 
     List<Movie> findByReleaseDate(LocalDate releaseDate);
 
     List<Movie> findAllByIsAdultTrue();
     List<Movie> findAllByIsAdultFalse();
 
-    Movie findByTitle(String string);
+    Optional<Movie> findByTitle(String string);
 
     List<Movie> findAllByPosterIsNot(String poster);
+    List<Movie> findAllByTrailerIsNot(String poster);
 
     List<Movie> findAllByRuntimeLessThan(Integer runtime);
 

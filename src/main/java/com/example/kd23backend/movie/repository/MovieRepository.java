@@ -16,10 +16,12 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query("SELECT m.id FROM Movie m")
     Set<Integer> findAllIds();
 
-    @EntityGraph(value = "movieOnly", type = EntityGraph.EntityGraphType.FETCH)
-    List<Movie> findAllByTitle(String title);
+    List<Movie> findAllByTitleContains(String title);
 
-    Movie findByTitle(String title);
+    Optional<Movie> findByTitle(String title);
+    @Query("SELECT DISTINCT m FROM Movie m JOIN m.genres g WHERE LOWER(g.name) LIKE ?1")
+    List<Movie> findAllByGenresContainingKeywordIgnoreCase(String keyword);
+    List<Movie> findAllByActorsContaining(String actor);
 
     List<Movie> findByReleaseDate(LocalDate releaseDate);
 
@@ -28,6 +30,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     List<Movie> findAllByIsAdultFalse();
 
     List<Movie> findAllByPosterIsNot(String poster);
+    List<Movie> findAllByTrailerIsNot(String poster);
 
     List<Movie> findAllByRuntimeLessThan(Integer runtime);
 
