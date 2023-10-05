@@ -1,110 +1,98 @@
 package com.example.kd23backend.movie.service;
 
-import com.example.kd23backend.movie.mappers.MovieDTO;
-import com.example.kd23backend.movie.mappers.MovieMapper;
-import com.example.kd23backend.movie.model.Actor;
-import com.example.kd23backend.movie.model.Genre;
 import com.example.kd23backend.movie.model.Movie;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import com.example.kd23backend.movie.repository.MovieRepository;
+import org.json.JSONObject;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Set;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.*;
 
 @Service
 public class MovieAPIService implements IMovieAPIService {
-    final String apiKey = "?api_key=bf45e26b2cbe79b9bcb399d646313e59";
-    final String appendToMovie = "append_to_response=videos,images,credits";
+
     final String BASE_MOVIE_API_URL = "https://api.themoviedb.org/3/movie/";
-    final String bearer = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZjQ1ZTI2YjJjYmU3OWI5YmNiMzk5ZDY0NjMxM2U1OSIsInN";
+    final String API_KEY = "?api_key=bf45e26b2cbe79b9bcb399d646313e59&";
+    final String APPEND_TO_MOVIE = "append_to_response=videos,credits";
+    InputStream inputStream = getClass().getResourceAsStream("/movie_ids_10_03_2023.json");
 
-    private final MovieService movieService;
     private final RestTemplate restTemplate;
-    private final MovieMapper movieMapper;
+    private final MovieRepository movieRepository;
 
 
-    public MovieAPIService(MovieService movieService, RestTemplate restTemplate, MovieMapper movieMapper) {
-        this.movieService = movieService;
+    public MovieAPIService(RestTemplate restTemplate, MovieRepository movieRepository) {
         this.restTemplate = restTemplate;
-        this.movieMapper = movieMapper;
+        this.movieRepository = movieRepository;
     }
 
-    @Override
-    public void fetchMovies() {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(chain -> {
-                    Request original = chain.request();
-                    Request request = original.newBuilder()
-                            .header("Accept", "application/json")
-                            .header("Authorization", bearer)
-                            .method(original.method(), original.body())
-                            .build();
-                    return chain.proceed(request);
-                })
-                .build();
 
-        int pageNumber = 1;
-        boolean hasMoreMovies = true;
+    public void fetchAllMovies() {
+        Set<Movie> movies = new HashSet<>();
+        Set<Integer> existingMovies = movieRepository.findAllIds();
 
-        while (hasMoreMovies) {
-            String url = constructUrl(pageNumber);
-            Request request = new Request.Builder()
-                    .url(url)
-                    .get()
-                    .build();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            skipFirstFourMovies(br);
+            Movie movie;
+            String line;
+            while ((line = br.readLine()) != null) {
+                JSONObject json = new JSONObject(line);
+                int movieId = json.getInt("id");
 
-            try (Response response = client.newCall(request).execute()) {
-                hasMoreMovies = hasMovieList_Still_NewMovies(response);
-                if (hasMoreMovies) {
-                    // Process the response here, save movies or whatever you want to do
-                    // ...
-
-                    // increment the page number for the next iteration
-                    pageNumber++;
+                if (movieId > 50000) {
+                    break;
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+
+                if (!existingMovies.contains(movieId)) {
+                    movie = fetchOneMovie(movieId);
+                    movies.add(movie);
+                    System.out.println("Movie: " + movieId + " has been added!");
+                } else {
+                    System.out.println("Movie: " + movieId + " already in the Database!");
+                }
+
             }
+            movieRepository.saveAll(movies);
+            System.out.println("Next batch of movies has been added!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    private String constructUrl(int pageNumber) {
-        return BASE_MOVIE_API_URL + pageNumber + apiKey + appendToMovie;
-    }
+    public Movie fetchOneMovie(Integer id) {
+        try {
 
-    public boolean hasMovieList_Still_NewMovies(Response response) {
-        return response.code() != 400;
-    }
+            ResponseEntity<Movie> movieResponse = restTemplate.exchange(
+                    baseURLWithID(id),
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
 
-    public Movie convertDTO_ToEntity(MovieDTO movieDTO) {
-        return movieMapper.dtoToEntity(movieDTO);
-    }
-
-
-    public Set<Genre> setGenreForMovie(Genre[] genres_id) {
-        return movieMapper.mapGenreIdsToGenreSet(genres_id);
-    }
-
-    public Set<Actor> setActorsForMovie(Actor[] actors) {
-        return movieMapper.mapActorsFromFetchToSetActors(actors);
+            return movieResponse.getBody();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
 
-    @Override
-    public void fetchActors_And_AddToMovies(Set<Movie> movies) {
-
+    public void skipFirstFourMovies(BufferedReader br) throws IOException {
+        for (int i = 0; i < 5; i++) {
+            br.readLine();
+        }
     }
 
-    @Override
-    public void fetchTrailers_And_AddToMovies(Set<Movie> movies) {
 
-    }
-
-    @Override
-    public void saveAllMovies(Set<Movie> movies) {
-
+    private String baseURLWithID(Integer id) {
+        return BASE_MOVIE_API_URL + id + API_KEY + APPEND_TO_MOVIE;
     }
 }

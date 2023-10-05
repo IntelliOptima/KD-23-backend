@@ -1,21 +1,26 @@
 package com.example.kd23backend.movie.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.antlr.v4.runtime.misc.NotNull;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Entity
 @Data
+@NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Actor {
-
     @Id
+    private int id;
+
     private String name;
 
-    @ManyToMany(mappedBy = "actors", cascade = CascadeType.MERGE)
+    @Transient
+    @ManyToMany(mappedBy = "actors")
     @JsonBackReference
     private Set<Movie> movies;
+
 }
