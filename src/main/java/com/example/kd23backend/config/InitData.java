@@ -11,6 +11,12 @@ import com.example.kd23backend.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.swing.text.html.Option;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class InitData implements CommandLineRunner {
@@ -29,13 +35,25 @@ public class InitData implements CommandLineRunner {
     MovieService movieService;
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
-        movieAPIService.fetchAllMovies();
-        //System.out.println(movieService.findAllByPosterIsNot("movie has no trailer"));
-//        Movie fetchedMovie = movieService.findByTitle("star wars");
-//        System.out.println(fetchedMovie.getTitle());
-        //System.out.println(movieService.getSpecificMovie(7279));
-       // Login login = new Login();
+        //movieAPIService.fetchAllMovies();
+       // List<Movie> movieList = movieService.findAllByPosterIsNot("movie has no poster");
+     //   System.out.println("findAllBYPOSTERISNOT LIST SIZE (0) = " + movieList.size());
+       Optional<Movie> fetchedMovie = movieService.findByTitle("STAR wars");
+        System.out.println("should be star wars = " + fetchedMovie.get().getActors());
+        //Movie movie = movieService.getSpecificMovie(7279);
+        //System.out.println(movie.getTitle());
+        //movieList = movieService.findAllByTrailerIsNot("movie has no trailer");
+        //System.out.println("findAllByTrailerIsNot LIST SIZE (greaterthan0) = " + movieList.size());
+        //movieList = movieService.findAllByIsAdultTrue();
+        //System.out.println("findAllByAdultTrue LIST SIZE = " + movieList.size());
+        //movieList = movieService.findAllByIsAdultFalse();
+        //System.out.println("findAllByAdultFalse LIST SIZE = " + movieList.size());
+        //movieList = movieService.findAllByRuntimeLessThan(60);
+        //System.out.println("findAllByRuntimeLassthan 60 LIST SIZE = " + movieList.size());
+
+        //Login login = new Login();
         //login.setEmail("test@test.dk");
         //login.setPassword(applicationConfig.passwordEncoder().encode("Test1234"));
         //login.setRole(Role.USER);

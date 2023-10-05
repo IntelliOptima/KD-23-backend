@@ -2,14 +2,16 @@ package com.example.kd23backend.movie.service;
 
 import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie.repository.MovieRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieService implements IMovieService {
-
     private final MovieRepository movieRepository;
 
     public MovieService(MovieRepository movieRepository) {
@@ -18,22 +20,34 @@ public class MovieService implements IMovieService {
 
     @Override
     public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+        PageRequest pageable = PageRequest.of(0, 10);
+        Page<Movie> moviePage = movieRepository.findAll(pageable);
+        return moviePage.getContent();
     }
 
     @Override
-    public Movie getSpecificMovie(Integer id) {
-        return movieRepository.findById(id).orElseThrow();
+    public Optional<Movie> getSpecificMovie(Integer id) {
+        return movieRepository.findById(id);
     }
 
     @Override
-    public List<Movie> findAllByTitle(String title) {
-        return movieRepository.findAllByTitle(title);
+    public List<Movie> findAllByTitleContains(String title) {
+        return movieRepository.findAllByTitleContains(title);
     }
 
     @Override
-    public Movie findByTitle(String title) {
+    public Optional<Movie> findByTitle(String title) {
         return movieRepository.findByTitle(title);
+    }
+
+    @Override
+    public List<Movie> findAllByGenresContainingKeywordIgnoreCase(String genre) {
+        return movieRepository.findAllByGenresContainingKeywordIgnoreCase(genre);
+    }
+
+    @Override
+    public List<Movie> findAllByActorsContains(String actor) {
+        return movieRepository.findAllByActorsContaining(actor);
     }
 
     @Override
@@ -54,6 +68,11 @@ public class MovieService implements IMovieService {
     @Override
     public List<Movie> findAllByPosterIsNot(String poster) {
         return movieRepository.findAllByPosterIsNot(poster);
+    }
+
+    @Override
+    public List<Movie> findAllByTrailerIsNot(String trailer) {
+        return movieRepository.findAllByTrailerIsNot(trailer);
     }
 
     @Override
