@@ -15,15 +15,15 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonSerialize(using = ActorSerializer.class)
+//@JsonSerialize(using = ActorSerializer.class)
 public class Actor {
     @Id
     private int id;
 
     private String name;
 
-    @ManyToMany(mappedBy = "actors")
-    @JsonBackReference(value = "movie-actor")
+    @ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Movie> movies;
 
 }

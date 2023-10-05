@@ -4,6 +4,7 @@ import com.example.kd23backend.auth.config.ApplicationConfig;
 import com.example.kd23backend.auth.model.Login;
 import com.example.kd23backend.auth.model.Role;
 import com.example.kd23backend.auth.repository.UserRepo;
+import com.example.kd23backend.movie.model.Actor;
 import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie.service.IMovieAPIService;
 import com.example.kd23backend.movie.service.MovieAPIService;
@@ -41,7 +42,7 @@ public class InitData implements CommandLineRunner {
        // List<Movie> movieList = movieService.findAllByPosterIsNot("movie has no poster");
      //   System.out.println("findAllBYPOSTERISNOT LIST SIZE (0) = " + movieList.size());
        Optional<Movie> fetchedMovie = movieService.findByTitle("STAR wars");
-        System.out.println("should be star wars = " + fetchedMovie.get().getActors());
+        fetchedMovie.ifPresent(movie -> movie.getActors().stream().map(Actor::getMovies).toList().forEach(System.out::println));
         //Movie movie = movieService.getSpecificMovie(7279);
         //System.out.println(movie.getTitle());
         //movieList = movieService.findAllByTrailerIsNot("movie has no trailer");

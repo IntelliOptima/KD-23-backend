@@ -5,9 +5,10 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+
 @Data
 @NoArgsConstructor
-public class ActorDTO implements Serializable {
+public class ActorDTO implements Std {
     private Integer id;
     private String name;
 }
