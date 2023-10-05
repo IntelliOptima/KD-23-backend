@@ -18,7 +18,9 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
     List<Movie> findAllByTitleContains(String title);
 
+    @EntityGraph(value = "Movie.withActors", type = EntityGraph.EntityGraphType.LOAD)
     Optional<Movie> findByTitle(String title);
+
     @Query("SELECT DISTINCT m FROM Movie m JOIN m.genres g WHERE LOWER(g.name) LIKE ?1")
     List<Movie> findAllByGenresContainingKeywordIgnoreCase(String keyword);
     List<Movie> findAllByActorsContaining(String actor);

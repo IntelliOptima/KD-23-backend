@@ -44,8 +44,6 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
-    @JsonManagedReference(value = "actors")
-    @JsonIgnore
     private Set<Actor> actors;
 
     @ManyToMany(cascade = CascadeType.ALL)
