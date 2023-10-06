@@ -25,10 +25,10 @@ public class Program {
 
     @ManyToOne
     @JoinColumn(name = "cinema_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference(value = "program-cinema")
     private Cinema cinema;
 
     @OneToMany(mappedBy = "program")
-    @JsonManagedReference
+    //@JsonManagedReference(value = "program-movieshows")
     private Set<MovieShow> movieShows;
 }

@@ -25,16 +25,16 @@ public class MovieShow {
 
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
-    @JsonManagedReference
+    //@JsonManagedReference(value = "movieshow-movie")
     private Movie movie;
 
     @ManyToOne
     @JoinColumn(name = "theatre_id", referencedColumnName = "id")
-    @JsonManagedReference
+    //@JsonManagedReference(value = "movieshow-theater")
     private Theater theater;
 
     @ManyToOne
     @JoinColumn(name = "program_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference(value = "movieshow-program")
     private Program program;
 }

@@ -20,7 +20,7 @@ public class Actor {
 
     @Transient
     @ManyToMany(mappedBy = "actors")
-    @JsonBackReference
+    @JsonBackReference(value = "actor-movies")
     private Set<Movie> movies;
 
 }
