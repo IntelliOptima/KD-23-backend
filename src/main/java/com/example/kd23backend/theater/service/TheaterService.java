@@ -40,6 +40,11 @@ public class TheaterService implements ITheaterService {
         return theaterRepository.findById(id).orElseThrow();
     }
 
+    @Override
+    public List<Theater> getTheatersForCinemaId(int id) {
+        return theaterRepository.findAllByCinema_Id(id);
+    }
+
 
     @Override
     public List<Theater> getTheaters() {

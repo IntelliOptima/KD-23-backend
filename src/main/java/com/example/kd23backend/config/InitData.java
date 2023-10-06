@@ -1,15 +1,25 @@
 package com.example.kd23backend.config;
 
+import com.example.kd23backend.address.model.Address;
+import com.example.kd23backend.address.repository.AddressRepository;
 import com.example.kd23backend.auth.config.ApplicationConfig;
 import com.example.kd23backend.auth.model.Login;
 import com.example.kd23backend.auth.model.Role;
 import com.example.kd23backend.auth.repository.UserRepo;
+import com.example.kd23backend.booking.model.Booking;
+import com.example.kd23backend.booking.repository.BookingRepository;
+import com.example.kd23backend.cinema.model.Cinema;
+import com.example.kd23backend.cinema.repository.CinemaRepository;
 import com.example.kd23backend.movie.model.Actor;
 import com.example.kd23backend.movie.model.Genre;
 import com.example.kd23backend.movie.model.Movie;
-import com.example.kd23backend.movie.service.IMovieAPIService;
 import com.example.kd23backend.movie.service.MovieAPIService;
 import com.example.kd23backend.movie.service.MovieService;
+import com.example.kd23backend.seat.model.Seat;
+import com.example.kd23backend.seat.repository.SeatRepository;
+import com.example.kd23backend.theater.model.StandardTheater;
+import com.example.kd23backend.theater.model.Theater;
+import com.example.kd23backend.theater.repository.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -37,26 +47,87 @@ public class InitData implements CommandLineRunner {
     @Autowired
     MovieService movieService;
 
+    @Autowired
+    CinemaRepository cinemaRepository;
+
+    @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
+    TheaterRepository theaterRepository;
+
+    @Autowired
+    SeatRepository seatRepository;
+
+    @Autowired
+    BookingRepository bookingRepository;
+
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-//        movieAPIService.fetchAllMovies();
-       // List<Movie> movieList = movieService.findAllByPosterIsNot("movie has no poster");
-     //   System.out.println("findAllBYPOSTERISNOT LIST SIZE (0) = " + movieList.size());
-        List<Movie> movies = new ArrayList<>();
-        movies.add(movieService.findByTitle("Ariel").get());
-        Actor actor = movies.get(0).getActors().stream().limit(1).toList().get(0);
-        Actor tomHanks = new Actor();
-        tomHanks.setId(31);
-        tomHanks.setName("Tom Hanks");
 
-        Genre genre = movies.get(0).getGenres().stream().limit(1).toList().get(0);
-        List<Movie> moviesByGenre = movieService.findAllByGenresContaining(genre);
-        moviesByGenre.forEach(System.out::println);
+        //Init data for cinema -----------------------------------------------
 
-        List<Movie> moviesByActor = movieService.findAllByActorsContaining(tomHanks);
-        moviesByActor.forEach(System.out::println);
+        Address address2 = new Address();
+        address2.setStreet("Blahblah");
+        address2.setNumber("69");
+        address2.setCity("Slagelse");
+        address2.setZip("420");
+        address2.setCountry("Danmark");
+        addressRepository.save(address2);
 
+
+       Address address = new Address();
+
+        address.setStreet("Biografstræde");
+        address.setNumber("69");
+        address.setCity("Slagelse");
+        address.setZip("4200");
+        address.setCountry("Danmark");
+        addressRepository.save(address);
+
+        Cinema cinema = new Cinema();
+        cinema.setName("KinoXp");
+        cinema.setAddress(address);
+        cinemaRepository.save(cinema);
+
+        Theater standardTheater = new StandardTheater();
+        standardTheater.setTotalRows(10);
+        standardTheater.setSeatsPerRow(5);
+        standardTheater.setCinema(cinema);
+        theaterRepository.save(standardTheater);
+
+
+        Seat seat = new Seat();
+        for (int i = 0; i < standardTheater.getSeatsPerRow() * standardTheater.getTotalRows(); i++){
+            seat.setPriceWeight(1);
+            seat.setTheater(standardTheater);
+            seatRepository.save(seat);
+            seat = new Seat();
+        }
+        Seat newSeat = seatRepository.findAll().get(0);
+        Booking booking = new Booking();
+        booking.setTheater(standardTheater);
+        booking.setEmail("MKsnmdkasd");
+        booking.setSeat(newSeat);
+        bookingRepository.save(booking);
+
+
+
+        //movieAPIService.fetchAllMovies();
+        //List<Movie> movieList = movieService.findAllByPosterIsNot("movie has no poster");
+        //System.out.println("findAllBYPOSTERISNOT LIST SIZE (0) = " + movieList.size());
+        //List<Movie> movies = new ArrayList<>();
+        //movies.add(movieService.findByTitle("Ariel").get());
+        //Actor actor = movies.get(0).getActors().stream().limit(1).toList().get(0);
+        //Actor tomHanks = new Actor();
+        //tomHanks.setId(31);
+        //tomHanks.setName("Tom Hanks");
+        //Genre genre = movies.get(0).getGenres().stream().limit(1).toList().get(0);
+        //List<Movie> moviesByGenre = movieService.findAllByGenresContaining(genre);
+        //moviesByGenre.forEach(System.out::println);
+        //List<Movie> moviesByActor = movieService.findAllByActorsContaining(tomHanks);
+        //moviesByActor.forEach(System.out::println);
         //Movie movie = movieService.getSpecificMovie(7279);
         //System.out.println(movie.getTitle());
         //movieList = movieService.findAllByTrailerIsNot("movie has no trailer");
