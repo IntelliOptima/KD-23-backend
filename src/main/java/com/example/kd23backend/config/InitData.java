@@ -32,9 +32,9 @@ public class InitData implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-//        movieAPIService.fetchAllMovies();
-       // List<Movie> movieList = movieService.findAllByPosterIsNot("movie has no poster");
-     //   System.out.println("findAllBYPOSTERISNOT LIST SIZE (0) = " + movieList.size());
+        movieAPIService.fetchAllMovies();
+        //List<Movie> movieList = movieService.findAllByPosterIsNot("movie has no poster");
+        //System.out.println("findAllBYPOSTERISNOT LIST SIZE (0) = " + movieList.size());
         //Movie movie = movieService.getSpecificMovie(7279);
         //System.out.println(movie.getTitle());
         //movieList = movieService.findAllByTrailerIsNot("movie has no trailer");
