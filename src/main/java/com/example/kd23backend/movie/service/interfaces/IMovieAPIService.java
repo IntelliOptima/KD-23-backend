@@ -1,4 +1,4 @@
-package com.example.kd23backend.movie.service;
+package com.example.kd23backend.movie.service.interfaces;
 
 
 import com.example.kd23backend.movie.model.Movie;

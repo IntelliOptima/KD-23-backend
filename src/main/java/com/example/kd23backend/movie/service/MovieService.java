@@ -6,16 +6,17 @@ import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie.repository.ActorRepository;
 import com.example.kd23backend.movie.repository.GenreRepository;
 import com.example.kd23backend.movie.repository.MovieRepository;
+import com.example.kd23backend.movie.service.interfaces.IMovieService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MovieService implements IMovieService, IGenreService, IActorService {
+public class MovieService implements IMovieService {
     private final MovieRepository movieRepository;
     private final ActorRepository actorRepository;
     private final GenreRepository genreRepository;
@@ -27,8 +28,7 @@ public class MovieService implements IMovieService, IGenreService, IActorService
     }
 
     @Override
-    public List<Movie> getAllMovies() {
-        PageRequest pageable = PageRequest.of(0, 10);
+    public List<Movie> getAllMovies(Pageable pageable) {
         Page<Movie> moviePage = movieRepository.findAll(pageable);
         return moviePage.getContent();
     }
@@ -39,59 +39,54 @@ public class MovieService implements IMovieService, IGenreService, IActorService
     }
 
     @Override
-    public List<Movie> findAllByTitleContains(String title) {
-        return movieRepository.findAllByTitleContainsIgnoreCase(title);
+    public List<Movie> findAllByTitleContains(String title, Pageable pageable) {
+        return movieRepository.findAllByTitleContainsIgnoreCaseOrderByTitle(title, pageable);
     }
 
     @Override
-    public Optional<Movie> findByTitle(String title) {
-        return movieRepository.findByTitle(title);
+    public List<Movie> findAllByActorsContaining(Actor actor, Pageable pageable) {
+        return movieRepository.findAllByActorsContainingOrderByTitle(actor, pageable);
     }
 
     @Override
-    public List<Movie> findAllByActorsContaining(Actor actor) {
-        return movieRepository.findAllByActorsContaining(actor);
-    }
-
-    @Override
-    public List<Movie> findAllByGenresContaining(Genre genre) {
-        return movieRepository.findAllByGenresContaining(genre);
+    public List<Movie> findAllByGenresContaining(Genre genre, Pageable pageable) {
+        return movieRepository.findAllByGenresContainingOrderByTitle(genre, pageable);
     }
 
 
     @Override
-    public List<Movie> findByReleaseDate(LocalDate releaseDate) {
-        return movieRepository.findByReleaseDate(releaseDate);
+    public List<Movie> findByReleaseDate(LocalDate releaseDate, Pageable pageable) {
+        return movieRepository.findByReleaseDateOrderByReleaseDate(releaseDate, pageable);
     }
 
     @Override
-    public List<Movie> findAllByIsAdultTrue() {
-        return movieRepository.findAllByIsAdultTrue();
+    public List<Movie> findAllByIsAdultTrue(Pageable pageable) {
+        return movieRepository.findAllByIsAdultTrue(pageable);
     }
 
     @Override
-    public List<Movie> findAllByIsAdultFalse() {
-        return movieRepository.findAllByIsAdultFalse();
+    public List<Movie> findAllByIsAdultFalse(Pageable pageable) {
+        return movieRepository.findAllByIsAdultFalseOrderByTitle(pageable);
     }
 
     @Override
-    public List<Movie> findAllByPosterIsNot(String poster) {
-        return movieRepository.findAllByPosterIsNot(poster);
+    public List<Movie> findAllByPosterIsNot(String poster, Pageable pageable) {
+        return movieRepository.findAllByPosterIsNotOrderByTitle(poster, pageable);
     }
 
     @Override
-    public List<Movie> findAllByTrailerIsNot(String trailer) {
-        return movieRepository.findAllByTrailerIsNot(trailer);
+    public List<Movie> findAllByTrailerIsNot(String trailer, Pageable pageable) {
+        return movieRepository.findAllByTrailerIsNotOrderByTitle(trailer, pageable);
     }
 
     @Override
-    public List<Movie> findAllByRuntimeLessThan(Integer runtime) {
-        return movieRepository.findAllByRuntimeLessThan(runtime);
+    public List<Movie> findAllByRuntimeLessThan(Integer runtime, Pageable pageable) {
+        return movieRepository.findAllByRuntimeLessThanOrderByRuntimeDesc(runtime, pageable);
     }
 
     @Override
-    public List<Movie> findAllByVoteRatingIsGreaterThan(Double voteRating) {
-        return movieRepository.findAllByVoteRatingIsGreaterThan(voteRating);
+    public List<Movie> findAllByVoteRatingIsGreaterThan(Double voteRating, Pageable pageable) {
+        return movieRepository.findAllByVoteRatingIsGreaterThanOrderByVoteRating(voteRating, pageable);
     }
 
     @Override
@@ -101,21 +96,21 @@ public class MovieService implements IMovieService, IGenreService, IActorService
 
     @Override
     public List<Genre> findGenreByNameContainingIgnoreCase(String genreName) {
-        return genreRepository.findByNameContainingIgnoreCase(genreName);
+        return genreRepository.findByNameContainingIgnoreCaseOrderByName(genreName);
     }
 
     @Override
-    public List<Genre> findAllGenresByMoviesContaining(Integer movieId) {
-        return genreRepository.findAllByMoviesContaining(movieId);
+    public List<Genre> findAllGenresByMoviesContaining(Integer movieId, Pageable pageable) {
+        return genreRepository.findAllByMoviesContaining(movieId, pageable);
     }
 
     @Override
-    public List<Actor> findActorByNameContainingIgnoreCase(String actorName) {
-        return actorRepository.findByNameContainingIgnoreCase(actorName);
+    public List<Actor> findActorByNameContainingIgnoreCase(String actorName, Pageable pageable) {
+        return actorRepository.findByNameContainingIgnoreCase(actorName, pageable);
     }
 
     @Override
-    public List<Actor> findAllActorsByMoviesContaining(Integer movieId) {
-        return actorRepository.findAllByMoviesContaining(movieId);
+    public List<Actor> findAllActorsByMoviesContaining(Integer movieId, Pageable pageable) {
+        return actorRepository.findAllByMoviesContaining(movieId, pageable);
     }
 }

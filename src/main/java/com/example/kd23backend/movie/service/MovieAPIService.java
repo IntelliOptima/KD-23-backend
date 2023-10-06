@@ -2,6 +2,7 @@ package com.example.kd23backend.movie.service;
 
 import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie.repository.MovieRepository;
+import com.example.kd23backend.movie.service.interfaces.IMovieAPIService;
 import org.json.JSONObject;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
