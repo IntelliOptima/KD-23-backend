@@ -13,8 +13,7 @@ public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer price;
-    private Integer seatNum;
+    private double priceWeight;
 
 
     @ManyToOne

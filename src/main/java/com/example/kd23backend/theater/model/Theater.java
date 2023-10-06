@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -28,7 +29,7 @@ public abstract class Theater {
 
     @OneToMany(mappedBy = "theater")
     @JsonManagedReference
-    private TreeSet<Seat> seats;
+    private List<Seat> seats;
 
 
     @OneToMany(mappedBy = "theater", cascade = CascadeType.MERGE)
@@ -41,15 +42,12 @@ public abstract class Theater {
     @JsonBackReference
     private Cinema cinema;
 
-    public Theater() {
-        this.seats = new TreeSet<>(Comparator.comparingInt(Seat::getSeatNum));
-    }
-
+    /*
     @Transient
     protected TheaterImplementationStrategy implementationStrategy;
 
     public double getSeatPrice(Seat seat) {
         return implementationStrategy.calculateSeatPrice(seat);
     }
-
+    */
 }
