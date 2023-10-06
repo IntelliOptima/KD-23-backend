@@ -26,6 +26,8 @@ public class SecurityConfig {
         if (true) {
             // Disable security for the "dev" profile
             http
+                    .csrf()
+                    .disable()
                     .authorizeRequests()
                     .requestMatchers("/**")
                     .permitAll();

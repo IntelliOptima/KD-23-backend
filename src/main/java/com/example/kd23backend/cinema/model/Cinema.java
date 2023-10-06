@@ -31,14 +31,14 @@
         private Address address;
 
         @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
-        @JsonManagedReference
+        //@JsonManagedReference(value = "cinema-employees")
         private List<Employee> employees;
 
         @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
-        @JsonManagedReference
+        //@JsonManagedReference(value = "cinema-theaters")
         private List<Theater> theaters;
 
         @OneToMany(mappedBy = "cinema")
-        @JsonManagedReference
+        //@JsonManagedReference(value = "cinema-programs")
         private List<Program> programs;
     }

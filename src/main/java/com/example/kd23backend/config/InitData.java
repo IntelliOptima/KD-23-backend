@@ -6,12 +6,13 @@ import com.example.kd23backend.auth.config.ApplicationConfig;
 import com.example.kd23backend.auth.model.Login;
 import com.example.kd23backend.auth.model.Role;
 import com.example.kd23backend.auth.repository.UserRepo;
+import com.example.kd23backend.booking.model.Booking;
+import com.example.kd23backend.booking.repository.BookingRepository;
 import com.example.kd23backend.cinema.model.Cinema;
 import com.example.kd23backend.cinema.repository.CinemaRepository;
 import com.example.kd23backend.movie.model.Actor;
 import com.example.kd23backend.movie.model.Genre;
 import com.example.kd23backend.movie.model.Movie;
-import com.example.kd23backend.movie.service.IMovieAPIService;
 import com.example.kd23backend.movie.service.MovieAPIService;
 import com.example.kd23backend.movie.service.MovieService;
 import com.example.kd23backend.seat.model.Seat;
@@ -58,12 +59,23 @@ public class InitData implements CommandLineRunner {
     @Autowired
     SeatRepository seatRepository;
 
+    @Autowired
+    BookingRepository bookingRepository;
+
     @Override
     @Transactional
     public void run(String... args) throws Exception {
 
         //Init data for cinema -----------------------------------------------
-        /*
+
+        Address address2 = new Address();
+        address2.setStreet("Blahblah");
+        address2.setNumber("69");
+        address2.setCity("Slagelse");
+        address2.setZip("420");
+        address2.setCountry("Danmark");
+        addressRepository.save(address2);
+
 
        Address address = new Address();
 
@@ -80,21 +92,26 @@ public class InitData implements CommandLineRunner {
         cinemaRepository.save(cinema);
 
         Theater standardTheater = new StandardTheater();
-        standardTheater.setTotalRows(20);
-        standardTheater.setSeatsPerRow(24);
+        standardTheater.setTotalRows(10);
+        standardTheater.setSeatsPerRow(5);
         standardTheater.setCinema(cinema);
         theaterRepository.save(standardTheater);
 
 
         Seat seat = new Seat();
-        for (int i = 0; i < 20*24; i++){
-            seat.setSeatNum(i);
+        for (int i = 0; i < standardTheater.getSeatsPerRow() * standardTheater.getTotalRows(); i++){
+            seat.setPriceWeight(1);
+            seat.setTheater(standardTheater);
+            seatRepository.save(seat);
+            seat = new Seat();
         }
-        seat.setPriceWeight(1);
-        seat.setTheater(standardTheater);
-        seatRepository.save(seat);
+        Seat newSeat = seatRepository.findAll().get(0);
+        Booking booking = new Booking();
+        booking.setTheater(standardTheater);
+        booking.setEmail("MKsnmdkasd");
+        booking.setSeat(newSeat);
+        bookingRepository.save(booking);
 
-        */
 
 
         //movieAPIService.fetchAllMovies();

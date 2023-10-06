@@ -45,7 +45,7 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
-    @JsonManagedReference
+    //@JsonManagedReference(value = "movie-actor-actors")
     private Set<Actor> actors;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -54,10 +54,11 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    @JsonManagedReference(value = "genres")
+    //@JsonManagedReference(value = "movie-genres-genres")
     private Set<Genre> genres;
 
 
+    @Transient
     @OneToMany(mappedBy = "movie", cascade = CascadeType.MERGE)
     @JsonBackReference(value = "movie-show")
     private Set<MovieShow> movieShows;

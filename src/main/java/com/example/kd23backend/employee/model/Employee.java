@@ -24,7 +24,7 @@ public class Employee {
 
     @ManyToOne()
     @JoinColumn(name = "cinema_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference(value = "employee-cinema")
     private Cinema cinema;
 
     @OneToOne

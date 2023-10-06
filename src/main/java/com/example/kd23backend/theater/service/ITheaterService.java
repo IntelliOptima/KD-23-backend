@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ITheaterService {
     Theater getSpecificTheater(int id);
+    List<Theater> getTheatersForCinemaId(int id);
 
     List<Theater> getTheaters();
 }
