@@ -16,6 +16,7 @@ import java.util.List;
 
 @Component
 public class InitData implements CommandLineRunner {
+    String apiTest = "https://api.themoviedb.org/3/movie/18?api_key=bf45e26b2cbe79b9bcb399d646313e59&append_to_response=videos,credits";
 
     @Autowired
     ApplicationConfig applicationConfig;
@@ -33,8 +34,8 @@ public class InitData implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
         movieAPIService.fetchAllMovies();
-        //List<Movie> movieList = movieService.findAllByPosterIsNot("movie has no poster");
-        //System.out.println("findAllBYPOSTERISNOT LIST SIZE (0) = " + movieList.size());
+       // List<Movie> movieList = movieService.findAllByPosterIsNot("movie has no poster");
+     //   System.out.println("findAllBYPOSTERISNOT LIST SIZE (0) = " + movieList.size());
         //Movie movie = movieService.getSpecificMovie(7279);
         //System.out.println(movie.getTitle());
         //movieList = movieService.findAllByTrailerIsNot("movie has no trailer");
