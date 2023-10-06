@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class MovieAPIService implements IMovieAPIService {
@@ -36,8 +37,10 @@ public class MovieAPIService implements IMovieAPIService {
 
     public void fetchAllMovies() {
         Set<Movie> movies = new HashSet<>();
-        Set<Integer> existingMovies = movieRepository.findAllIds();
+        Optional<Integer> maxId = movieRepository.findAllIds().stream().max(Integer::compareTo);
+        AtomicReference<Integer> largestID = new AtomicReference<>(0);
 
+        maxId.ifPresent(largestID::set);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             skipFirstFourMovies(br);
             Movie movie;
@@ -46,11 +49,11 @@ public class MovieAPIService implements IMovieAPIService {
                 JSONObject json = new JSONObject(line);
                 int movieId = json.getInt("id");
 
-                if (movieId > 50000) {
+                if (movieId > 70000) {
                     break;
                 }
 
-                if (!existingMovies.contains(movieId)) {
+                if (movieId > 50000) {
                     movie = fetchOneMovie(movieId);
                     movies.add(movie);
                     System.out.println("Movie: " + movieId + " has been added!");

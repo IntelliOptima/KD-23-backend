@@ -33,7 +33,7 @@ public class InitData implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-//        movieAPIService.fetchAllMovies();
+        movieAPIService.fetchAllMovies();
        // List<Movie> movieList = movieService.findAllByPosterIsNot("movie has no poster");
      //   System.out.println("findAllBYPOSTERISNOT LIST SIZE (0) = " + movieList.size());
         //Movie movie = movieService.getSpecificMovie(7279);
