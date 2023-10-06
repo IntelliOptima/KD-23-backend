@@ -2,6 +2,7 @@ package com.example.kd23backend.movie.service;
 
 import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie.repository.MovieRepository;
+import com.example.kd23backend.movie.service.interfaces.IMovieAPIService;
 import org.json.JSONObject;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -46,7 +47,7 @@ public class MovieAPIService implements IMovieAPIService {
                 JSONObject json = new JSONObject(line);
                 int movieId = json.getInt("id");
 
-                if (movieId > 50000) {
+                if (movieId > 150000) {
                     break;
                 }
 
@@ -85,7 +86,7 @@ public class MovieAPIService implements IMovieAPIService {
     }
 
 
-    public void skipFirstFourMovies(BufferedReader br) throws IOException {
+    private void skipFirstFourMovies(BufferedReader br) throws IOException {
         for (int i = 0; i < 5; i++) {
             br.readLine();
         }
