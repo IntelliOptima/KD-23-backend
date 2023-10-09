@@ -40,7 +40,7 @@ public class MovieAPIService implements IMovieAPIService {
         Set<Integer> existingMovies = movieRepository.findAllIds();
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
-            skipFirstFourMovies(br);
+            skipFirstFourMoviesFromList(br);
             Movie movie;
             String line;
             while ((line = br.readLine()) != null) {
@@ -86,7 +86,7 @@ public class MovieAPIService implements IMovieAPIService {
     }
 
 
-    private void skipFirstFourMovies(BufferedReader br) throws IOException {
+    private void skipFirstFourMoviesFromList(BufferedReader br) throws IOException {
         for (int i = 0; i < 5; i++) {
             br.readLine();
         }
