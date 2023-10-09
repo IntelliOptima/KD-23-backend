@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 public class StandardTheater extends Theater {
 
     public StandardTheater() {
-        this.implementationStrategy = new StandardImplementationStrategy();
+        //this.implementationStrategy = new StandardImplementationStrategy();
     }
 
 }

@@ -18,7 +18,7 @@ public class Genre {
 
     @Transient
     @ManyToMany(mappedBy = "genres")
-    @JsonBackReference
+    @JsonBackReference(value = "genre-movie")
     private Set<Movie> movies;
 }
 

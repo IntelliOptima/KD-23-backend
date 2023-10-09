@@ -1,8 +1,7 @@
-package com.example.kd23backend.seat.model;
+package com.example.kd23backend.booking.model;
 
-import com.example.kd23backend.booking.model.Booking;
+import com.example.kd23backend.seat.model.Seat;
 import com.example.kd23backend.theater.model.Theater;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,19 +9,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class Seat {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String email;
 
-    private double priceWeight;
 
     @ManyToOne
     @JoinColumn(name = "theater_id", referencedColumnName = "id")
-    @JsonBackReference(value = "seat-theater")
     private Theater theater;
 
-    @OneToOne(mappedBy = "seat")
-    @JsonBackReference(value = "seat-booking")
-    private Booking booking;
+
+    @OneToOne
+    @JoinColumn(name = "seat_id", referencedColumnName = "id")
+    private Seat seat;
 }

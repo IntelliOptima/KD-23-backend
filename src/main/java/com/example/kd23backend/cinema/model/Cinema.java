@@ -11,6 +11,7 @@
     import lombok.NoArgsConstructor;
     import org.springframework.beans.factory.annotation.Value;
 
+    import java.util.List;
     import java.util.Set;
 
     @Entity
@@ -30,14 +31,14 @@
         private Address address;
 
         @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
-        @JsonManagedReference
-        private Set<Employee> employees;
+        //@JsonManagedReference(value = "cinema-employees")
+        private List<Employee> employees;
 
         @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
-        @JsonManagedReference
-        private Set<Theater> theaters;
+        //@JsonManagedReference(value = "cinema-theaters")
+        private List<Theater> theaters;
 
         @OneToMany(mappedBy = "cinema")
-        @JsonManagedReference
-        private Set<Program> programs;
+        //@JsonManagedReference(value = "cinema-programs")
+        private List<Program> programs;
     }
