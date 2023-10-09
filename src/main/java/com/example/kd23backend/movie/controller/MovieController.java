@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/movie/")
 public class MovieController {
     private final int AMOUNT_OF_MOVIES = 15;
