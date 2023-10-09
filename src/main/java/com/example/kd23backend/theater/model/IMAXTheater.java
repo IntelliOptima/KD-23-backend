@@ -9,6 +9,6 @@ import jakarta.persistence.Entity;
 public class IMAXTheater extends Theater {
     
     public IMAXTheater() {
-        this.implementationStrategy = new IMAXImplementationStrategy();
+        //this.implementationStrategy = new IMAXImplementationStrategy();
     }
 }
