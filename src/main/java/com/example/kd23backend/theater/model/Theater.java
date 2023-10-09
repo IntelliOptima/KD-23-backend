@@ -43,8 +43,6 @@ public abstract class Theater {
     @JsonBackReference(value = "theater-cinema")
     private Cinema cinema;
 
-    @OneToMany(mappedBy = "theater")
-    private List<Booking> bookings;
 
     /*
     @Transient
