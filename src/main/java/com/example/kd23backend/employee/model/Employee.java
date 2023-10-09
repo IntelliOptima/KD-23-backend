@@ -5,11 +5,13 @@ import com.example.kd23backend.cinema.model.Cinema;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Employee {
 
     @Id
@@ -22,7 +24,7 @@ public class Employee {
 
     @ManyToOne()
     @JoinColumn(name = "cinema_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference(value = "employee-cinema")
     private Cinema cinema;
 
     @OneToOne

@@ -1,10 +1,8 @@
 package com.example.kd23backend.movie.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Set;
@@ -14,11 +12,13 @@ import java.util.Set;
 public class Genre {
 
     @Id
-    private Integer id; //API defines ID
+    private Integer id;
 
     private String name;
 
-    @ManyToMany(mappedBy = "genres", cascade = CascadeType.MERGE)
-    @JsonBackReference
+    @Transient
+    @ManyToMany(mappedBy = "genres")
+    @JsonBackReference(value = "genre-movie")
     private Set<Movie> movies;
 }
+

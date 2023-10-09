@@ -1,3 +1,5 @@
+
+
 package com.example.kd23backend.auth.config;
 
 import com.example.kd23backend.auth.filter.JwtAuthenticationFilter;
@@ -18,25 +20,33 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-                .csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
+        if (true) {
+            // Disable security for the "dev" profile
+            http
+                    .csrf()
+                    .disable()
+                    .authorizeRequests()
+                    .requestMatchers("/**")
+                    .permitAll();
+        } else {
+            http
+                    .csrf()
+                    .disable()
+                    .authorizeHttpRequests()
+                    .requestMatchers("/api/v1/auth/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                    .and()
+                    .authenticationProvider(authenticationProvider)
+                    .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        }
         return http.build();
     }
 
