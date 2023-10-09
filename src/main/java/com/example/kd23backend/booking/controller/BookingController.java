@@ -28,17 +28,8 @@ public class BookingController {
 
     @GetMapping("/find-all-by-movie-show/{id}")
     public ResponseEntity<List<BookingDTO>> findAllBookingsByMovieShowId(@PathVariable int id){
-        List<Booking> bookings = bookingService.findAllBookingsByMovieShowId(id);
-
-        List<BookingDTO> bookingDTOs = bookings.stream()
-                .map(booking -> new BookingDTO(
-                        booking.getId(),
-                        booking.getEmail(),
-                        booking.getMovieShow(),
-                        booking.getSeat()
-                ))
-                .toList();
-        return bookings.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(bookingDTOs);
+        List<BookingDTO> bookings = bookingService.findAllBookingsByMovieShowId(id);
+        return bookings.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(bookings);
     }
 
 }

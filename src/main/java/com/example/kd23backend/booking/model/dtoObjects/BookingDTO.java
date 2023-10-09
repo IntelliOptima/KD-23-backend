@@ -15,10 +15,4 @@ public class BookingDTO {
     private MovieShow movieShow;
     private Seat seat;
 
-    public BookingDTO(Integer id, String email, MovieShow movieShow, Seat seat) {
-        this.id = id;
-        this.email = email;
-        this.movieShow = movieShow;
-        this.seat = seat;
-    }
 }
