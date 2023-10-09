@@ -1,12 +1,14 @@
 package com.example.kd23backend.booking.controller;
 
 import com.example.kd23backend.booking.model.Booking;
+import com.example.kd23backend.booking.model.dtoObjects.BookingDTO;
 import com.example.kd23backend.booking.service.BookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -25,9 +27,18 @@ public class BookingController {
     }
 
     @GetMapping("/find-all-by-movie-show/{id}")
-    public ResponseEntity<List<Booking>> findAllBookingsByMovieShowId(@PathVariable int id){
+    public ResponseEntity<List<BookingDTO>> findAllBookingsByMovieShowId(@PathVariable int id){
         List<Booking> bookings = bookingService.findAllBookingsByMovieShowId(id);
-        return bookings.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(bookings);
+
+        List<BookingDTO> bookingDTOs = bookings.stream()
+                .map(booking -> new BookingDTO(
+                        booking.getId(),
+                        booking.getEmail(),
+                        booking.getMovieShow(),
+                        booking.getSeat()
+                ))
+                .toList();
+        return bookings.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(bookingDTOs);
     }
 
 }
