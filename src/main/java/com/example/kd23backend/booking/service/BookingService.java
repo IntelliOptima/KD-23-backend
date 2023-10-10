@@ -34,10 +34,16 @@ public class BookingService implements IBookingService{
         return bookingDTOS;
     }
 
-
-
-
-
+    @Override
+    public List<BookingDTO> findAllBookingsByUserEmail(String email) {
+        List<Booking> bookings = bookingRepository.findBookingsByEmail(email);
+        List<BookingDTO> bookingDTOS = new ArrayList<>();
+        for (Booking booking : bookings) {
+            BookingDTO dto = mapBookingToDTO(booking);
+            bookingDTOS.add(dto);
+        }
+        return bookingDTOS;
+    }
 
 
     public BookingDTO mapBookingToDTO(Booking booking) {
@@ -57,4 +63,6 @@ public class BookingService implements IBookingService{
 
         return dto;
     }
+
+
 }

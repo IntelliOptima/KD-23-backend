@@ -32,4 +32,10 @@ public class BookingController {
         return bookings.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(bookings);
     }
 
+    @GetMapping("/find-all-by-user/{email}")
+    public ResponseEntity<List<BookingDTO>> findAllBookingsByUserEmail(@PathVariable String email){
+        List<BookingDTO> bookings = bookingService.findAllBookingsByUserEmail(email);
+        return bookings.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(bookings);
+    }
+
 }

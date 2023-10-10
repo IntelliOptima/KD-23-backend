@@ -10,4 +10,6 @@ public interface IBookingService {
     Booking createBooking(Booking booking);
 
     List<BookingDTO> findAllBookingsByMovieShowId(int movieShowId);
+
+    List<BookingDTO> findAllBookingsByUserEmail(String email);
 }
