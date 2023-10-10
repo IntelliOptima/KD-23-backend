@@ -7,7 +7,12 @@ import com.example.kd23backend.auth.model.RegisterRequest;
 import com.example.kd23backend.auth.model.Role;
 import com.example.kd23backend.auth.model.Login;
 import com.example.kd23backend.auth.repository.UserRepo;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,12 +33,10 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest registerRequest) {
 
         Login login = new Login();
-        login.setEmail(registerRequest.getUsername());
+        login.setEmail(registerRequest.getEmail());
         login.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         login.setRole(Role.USER);
-
         userRepo.save(login);
-
         var jwtToken = jwtService.generateToken(login);
 
         return AuthenticationResponse.builder()
@@ -42,14 +45,18 @@ public class AuthenticationService {
     }
 
 
-    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
+    public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest, HttpServletResponse response) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+                new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
                         authenticationRequest.getPassword())
         );
 
-        var user = userRepo.findByEmail(authenticationRequest.getUsername()).orElseThrow();
+        var user = userRepo.findByEmail(authenticationRequest.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+
+
+        Cookie jwtCookie = new Cookie("token", jwtToken);
+        response.addCookie(jwtCookie);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
