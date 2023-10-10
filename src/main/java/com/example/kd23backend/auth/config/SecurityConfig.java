@@ -39,7 +39,10 @@ public class SecurityConfig {
                     .authorizeRequests()
                     .requestMatchers("/**")
                     .permitAll();
+            /*
         } else {
+
+
             http
                     .csrf()
                     .disable()
@@ -50,10 +53,14 @@ public class SecurityConfig {
                     .authenticated()
                     .and()
                     .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                     .authenticationProvider(authenticationProvider)
                     .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+
+
+             */
         }
         return http.build();
     }
