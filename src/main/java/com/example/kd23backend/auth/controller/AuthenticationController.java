@@ -5,6 +5,7 @@ import com.example.kd23backend.auth.model.AuthenticationRequest;
 import com.example.kd23backend.auth.model.AuthenticationResponse;
 import com.example.kd23backend.auth.model.RegisterRequest;
 import com.example.kd23backend.auth.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +28,10 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest authenticationRequest
+            @RequestBody AuthenticationRequest authenticationRequest,
+            HttpServletResponse response
     ) {
-        return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest));
+        return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest, response));
     }
 
 }

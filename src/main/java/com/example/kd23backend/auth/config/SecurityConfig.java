@@ -28,7 +28,7 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
+        /*
         if (true) {
             // Disable security for the "dev" profile
             http
@@ -40,23 +40,25 @@ public class SecurityConfig {
                     .requestMatchers("/**")
                     .permitAll();
         } else {
+
+         */
             http
                     .csrf()
                     .disable()
                     .authorizeHttpRequests()
-                    .requestMatchers("/api/v1/auth/**")
+                    .requestMatchers("/api/v1/auth/**", "/cinema")
                     .permitAll()
                     .anyRequest()
                     .authenticated()
                     .and()
                     .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                     .authenticationProvider(authenticationProvider)
                     .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        }
+
         return http.build();
-    }
+        }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
