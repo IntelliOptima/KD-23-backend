@@ -67,7 +67,14 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //Init data for cinema -----------------------------------------------
+
 /*
+        Login login = new Login();
+        login.setEmail("test@test.dk");
+        login.setPassword(applicationConfig.passwordEncoder().encode("Test1234"));
+        login.setRole(Role.USER);
+        userRepo.save(login);
+
         Address address2 = new Address();
         address2.setStreet("Blahblah");
         address2.setNumber("69");

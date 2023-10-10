@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cinema")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class CinemaController {
 
     private final CinemaService cinemaService;
