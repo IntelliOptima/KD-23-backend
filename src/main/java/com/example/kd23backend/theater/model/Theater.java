@@ -24,6 +24,7 @@ public abstract class Theater {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String name;
     private Integer seatsPerRow;
     private Integer totalRows;
 
