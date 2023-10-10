@@ -67,51 +67,50 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //Init data for cinema -----------------------------------------------
-//
-//        Address address2 = new Address();
-//        address2.setStreet("Blahblah");
-//        address2.setNumber("69");
-//        address2.setCity("Slagelse");
-//        address2.setZip("420");
-//        address2.setCountry("Danmark");
-//        addressRepository.save(address2);
-//
-//
-//       Address address = new Address();
-//
-//        address.setStreet("Biografstræde");
-//        address.setNumber("69");
-//        address.setCity("Slagelse");
-//        address.setZip("4200");
-//        address.setCountry("Danmark");
-//        addressRepository.save(address);
-//
-//        Cinema cinema = new Cinema();
-//        cinema.setName("KinoXp");
-//        cinema.setAddress(address);
-//        cinemaRepository.save(cinema);
-//
-//        Theater standardTheater = new StandardTheater();
-//        standardTheater.setTotalRows(10);
-//        standardTheater.setSeatsPerRow(5);
-//        standardTheater.setCinema(cinema);
-//        theaterRepository.save(standardTheater);
-//
-//
-//        Seat seat = new Seat();
-//        for (int i = 0; i < standardTheater.getSeatsPerRow() * standardTheater.getTotalRows(); i++){
-//            seat.setPriceWeight(1);
-//            seat.setTheater(standardTheater);
-//            seatRepository.save(seat);
-//            seat = new Seat();
-//        }
-//        Seat newSeat = seatRepository.findAll().get(0);
-//        Booking booking = new Booking();
-//        booking.setTheater(standardTheater);
-//        booking.setEmail("MKsnmdkasd");
-//        booking.setSeat(newSeat);
-//        bookingRepository.save(booking);
+/*
+        Address address2 = new Address();
+        address2.setStreet("Blahblah");
+        address2.setNumber("69");
+        address2.setCity("Slagelse");
+        address2.setZip("420");
+        address2.setCountry("Danmark");
+        addressRepository.save(address2);
 
+
+        Address address = new Address();
+
+        address.setStreet("Biografstræde");
+        address.setNumber("69");
+        address.setCity("Slagelse");
+        address.setZip("4200");
+        address.setCountry("Danmark");
+        addressRepository.save(address);
+
+        Cinema cinema = new Cinema();
+        cinema.setName("KinoXp");
+        cinema.setAddress(address2);
+        cinemaRepository.save(cinema);
+
+        Theater standardTheater = new StandardTheater();
+        standardTheater.setTotalRows(10);
+        standardTheater.setSeatsPerRow(5);
+        standardTheater.setCinema(cinema);
+        theaterRepository.save(standardTheater);
+
+
+        Seat seat = new Seat();
+        for (int i = 0; i < standardTheater.getSeatsPerRow() * standardTheater.getTotalRows(); i++) {
+            seat.setPriceWeight(1);
+            seat.setTheater(standardTheater);
+            seatRepository.save(seat);
+            seat = new Seat();
+        }
+        Seat newSeat = seatRepository.findAll().get(0);
+
+        Booking booking = new Booking();
+        booking.setEmail("MKsnmdkasd");
+        booking.setSeat(newSeat);
+        bookingRepository.save(booking);
 
 
         //movieAPIService.fetchAllMovies();
@@ -144,5 +143,7 @@ public class InitData implements CommandLineRunner {
         //login.setPassword(applicationConfig.passwordEncoder().encode("Test1234"));
         //login.setRole(Role.USER);
         //userRepo.save(login);
+
+        */
     }
 }
