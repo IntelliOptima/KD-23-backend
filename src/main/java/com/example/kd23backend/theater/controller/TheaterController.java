@@ -18,13 +18,13 @@ public class TheaterController {
         this.theaterService = theaterService;
     }
 
-    @GetMapping("/cinema/{id}")
-    public ResponseEntity<List<Theater>> getTheatersByCinemaId(@PathVariable int id){
+    @GetMapping("/cinema=/{id}")
+    public ResponseEntity<List<Theater>> getTheatersByCinemaId(@PathVariable Integer id){
         List<Theater> theaters = theaterService.getTheatersForCinemaId(id);
         return theaters.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(theaters);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id=/{id}")
     public ResponseEntity<Theater> getSpecificTheater(@PathVariable int id) {
         return ResponseEntity.ok(theaterService.getSpecificTheater(id));
     }

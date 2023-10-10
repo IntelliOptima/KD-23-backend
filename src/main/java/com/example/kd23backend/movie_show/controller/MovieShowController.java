@@ -38,10 +38,18 @@ public class MovieShowController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovieShow> findMovieShowById(@PathVariable int id){
+    public ResponseEntity<MovieShow> findMovieShowById(@PathVariable Integer id){
         Optional<MovieShow> movieShow = movieShowService.findMovieShowById(id);
         return movieShow.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.noContent().build());
     }
 
-
+    @GetMapping("theater=/{theaterId}/startDate=/{startDate}/endDate=/{endDate}/cinema=/{cinemaId}")
+    public ResponseEntity<List<MovieShow>> getMovieShowsForTheaterByTimePeriod(@PathVariable Integer theaterId,
+            @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @PathVariable @DateTimeFormat(pattern = "yyy-MM-dd") LocalDate endDate,
+            @PathVariable Integer cinemaId) {
+        System.out.println("theaterid = " +  theaterId + " start = " + startDate + " enddate =" + endDate + cinemaId);
+        List<MovieShow> movieShows = movieShowService.findAllByTheaterForTimePeriod(theaterId, cinemaId, startDate, endDate);
+        return movieShows.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(movieShows);
+    }
 }

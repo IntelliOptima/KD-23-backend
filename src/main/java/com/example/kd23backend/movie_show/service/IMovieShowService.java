@@ -9,10 +9,9 @@ import java.util.Optional;
 
 public interface IMovieShowService {
 
-
-
     List<MovieShow> findAllByStartDateTimeBetween(LocalDateTime startOfDay, LocalDateTime endOfDay);
 
-    Optional<MovieShow> findMovieShowById(int id);
+    Optional<MovieShow> findMovieShowById(Integer id);
 
+    List<MovieShow> findAllByTheaterForTimePeriod(Integer theaterId, Integer cinemaId, LocalDate startTime, LocalDate endTime );
 }

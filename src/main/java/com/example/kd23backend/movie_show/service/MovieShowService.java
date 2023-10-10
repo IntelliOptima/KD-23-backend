@@ -4,6 +4,7 @@ import com.example.kd23backend.movie_show.repository.MovieShowRepository;
 import com.example.kd23backend.movie_show.model.MovieShow;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -27,7 +28,13 @@ public class MovieShowService implements IMovieShowService{
     }
 
     @Override
-    public Optional<MovieShow> findMovieShowById(int id) {
+    public Optional<MovieShow> findMovieShowById(Integer id) {
         return movieShowRepository.findById(id);
+    }
+
+    @Override
+    public List<MovieShow> findAllByTheaterForTimePeriod(Integer theaterId, Integer cinemaId, LocalDate startTime, LocalDate endTime) {
+        return movieShowRepository.findAllByTheaterIdAndTheater_Cinema_IdAndStartDateTimeIsGreaterThanEqualAndStartDateTimeIsLessThanEqual(
+                theaterId, cinemaId, startTime, endTime);
     }
 }
