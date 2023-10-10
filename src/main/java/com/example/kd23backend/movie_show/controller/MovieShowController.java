@@ -1,5 +1,6 @@
 package com.example.kd23backend.movie_show.controller;
 
+import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie_show.model.MovieShow;
 import com.example.kd23backend.movie_show.service.MovieShowService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,9 +13,11 @@ import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -43,13 +46,19 @@ public class MovieShowController {
         return movieShow.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.noContent().build());
     }
 
-    @GetMapping("theater=/{theaterId}/startDate=/{startDate}/endDate=/{endDate}/cinema=/{cinemaId}")
+    @GetMapping("/theater=/{theaterId}/startDate=/{startDate}/endDate=/{endDate}/cinema=/{cinemaId}")
     public ResponseEntity<List<MovieShow>> getMovieShowsForTheaterByTimePeriod(@PathVariable Integer theaterId,
-            @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @PathVariable @DateTimeFormat(pattern = "yyy-MM-dd") LocalDate endDate,
+            @PathVariable String startDate,
+            @PathVariable String endDate,
             @PathVariable Integer cinemaId) {
+
+        System.out.println("IM HIT!!!");
+        LocalDateTime startDateTime = OffsetDateTime.parse(startDate).toLocalDateTime();
+        LocalDateTime endDateTime = OffsetDateTime.parse(endDate).toLocalDateTime();
+
         System.out.println("theaterid = " +  theaterId + " start = " + startDate + " enddate =" + endDate + cinemaId);
-        List<MovieShow> movieShows = movieShowService.findAllByTheaterForTimePeriod(theaterId, cinemaId, startDate, endDate);
+        List<MovieShow> movieShows = movieShowService.findAllByTheaterForTimePeriod(theaterId, cinemaId, startDateTime, endDateTime);
+        movieShows.forEach(movieShow -> System.out.println(movieShow.getMovie()));
         return movieShows.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(movieShows);
     }
 }

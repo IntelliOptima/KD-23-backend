@@ -33,7 +33,7 @@ public class MovieShowService implements IMovieShowService{
     }
 
     @Override
-    public List<MovieShow> findAllByTheaterForTimePeriod(Integer theaterId, Integer cinemaId, LocalDate startTime, LocalDate endTime) {
+    public List<MovieShow> findAllByTheaterForTimePeriod(Integer theaterId, Integer cinemaId, LocalDateTime startTime, LocalDateTime endTime) {
         return movieShowRepository.findAllByTheaterIdAndTheater_Cinema_IdAndStartDateTimeIsGreaterThanEqualAndStartDateTimeIsLessThanEqual(
                 theaterId, cinemaId, startTime, endTime);
     }

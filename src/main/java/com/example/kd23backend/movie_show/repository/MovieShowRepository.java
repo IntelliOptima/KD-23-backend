@@ -13,7 +13,7 @@ public interface MovieShowRepository extends JpaRepository<MovieShow, Integer> {
     List<MovieShow> findAllByStartDateTimeBetween(LocalDateTime startOfDay, LocalDateTime endOfDay);
 
     List<MovieShow> findAllByTheaterIdAndTheater_Cinema_IdAndStartDateTimeIsGreaterThanEqualAndStartDateTimeIsLessThanEqual(
-            Integer theaterId, Integer cinemaId, LocalDate startTime, LocalDate endTime );
+            Integer theaterId, Integer cinemaId, LocalDateTime startTime, LocalDateTime endTime );
 
     Optional<MovieShow> findById(int id);
 }
