@@ -58,7 +58,6 @@ public class Movie {
     private Set<Genre> genres;
 
 
-    @Transient
     @OneToMany(mappedBy = "movie", cascade = CascadeType.MERGE)
     @JsonBackReference(value = "movie-show")
     private Set<MovieShow> movieShows;

@@ -7,8 +7,11 @@ import jakarta.persistence.Entity;
 @Entity
 @DiscriminatorValue("IMAX")
 public class IMAXTheater extends Theater {
-    
-    public IMAXTheater() {
-        //this.implementationStrategy = new IMAXImplementationStrategy();
+
+    @Override
+    public Theater createTheater() {
+        IMAXTheater imaxTheater = new IMAXTheater();
+        imaxTheater.setImplementationStrategy(new IMAXImplementationStrategy());
+        return imaxTheater;
     }
 }

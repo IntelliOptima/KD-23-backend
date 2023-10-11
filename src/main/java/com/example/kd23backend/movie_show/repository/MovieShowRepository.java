@@ -12,11 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MovieShowRepository extends JpaRepository<MovieShow, Integer> {
-    @Query(value = "SELECT m.* FROM MovieShow m " +
-            "INNER JOIN program po ON m.id = po.program_id " +
-            "WHERE po.program_id = :programId",
-            nativeQuery = true)
-    List<MovieShow> findAllByProgramContaining(@Param("movieId") Integer programId);
+
     List<MovieShow> findAllByStartDateTimeBetween(LocalDateTime startOfDay, LocalDateTime endOfDay);
 
     List<MovieShow> findAllByTheaterIdAndTheater_Cinema_IdAndStartDateTimeIsGreaterThanEqualAndStartDateTimeIsLessThanEqual(

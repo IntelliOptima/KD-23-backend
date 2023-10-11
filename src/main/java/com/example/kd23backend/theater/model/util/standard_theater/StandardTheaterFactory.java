@@ -9,14 +9,4 @@ public class StandardTheaterFactory implements TheaterFactory {
     public Theater createTheater() {
         return new StandardTheater();
     }
-
-    @Override
-    public String[] getDisplayType() {
-        return new String[]{"2D"};
-    }
-
-    @Override
-    public String getType() {
-        return "STANDARD";
-    }
 }
