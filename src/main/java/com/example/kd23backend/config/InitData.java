@@ -1,35 +1,18 @@
 package com.example.kd23backend.config;
 
-import com.example.kd23backend.address.model.Address;
 import com.example.kd23backend.address.repository.AddressRepository;
 import com.example.kd23backend.auth.config.ApplicationConfig;
-import com.example.kd23backend.auth.model.Login;
-import com.example.kd23backend.auth.model.Role;
-import com.example.kd23backend.auth.repository.UserRepo;
-import com.example.kd23backend.booking.model.Booking;
+import com.example.kd23backend.auth.repository.LoginRepo;
 import com.example.kd23backend.booking.repository.BookingRepository;
-import com.example.kd23backend.cinema.model.Cinema;
 import com.example.kd23backend.cinema.repository.CinemaRepository;
-import com.example.kd23backend.movie.model.Actor;
-import com.example.kd23backend.movie.model.Genre;
-import com.example.kd23backend.movie.model.Movie;
 import com.example.kd23backend.movie.service.MovieAPIService;
 import com.example.kd23backend.movie.service.MovieService;
-import com.example.kd23backend.seat.model.Seat;
 import com.example.kd23backend.seat.repository.SeatRepository;
-import com.example.kd23backend.theater.model.StandardTheater;
-import com.example.kd23backend.theater.model.Theater;
 import com.example.kd23backend.theater.repository.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.swing.text.html.Option;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class InitData implements CommandLineRunner {
@@ -39,7 +22,7 @@ public class InitData implements CommandLineRunner {
     ApplicationConfig applicationConfig;
 
     @Autowired
-    UserRepo userRepo;
+    LoginRepo loginRepo;
 
     @Autowired
     MovieAPIService movieAPIService;
@@ -67,7 +50,14 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //Init data for cinema -----------------------------------------------
+
 /*
+        Login login = new Login();
+        login.setEmail("test@test.dk");
+        login.setPassword(applicationConfig.passwordEncoder().encode("Test1234"));
+        login.setRole(Role.USER);
+        userRepo.save(login);
+
         Address address2 = new Address();
         address2.setStreet("Blahblah");
         address2.setNumber("69");

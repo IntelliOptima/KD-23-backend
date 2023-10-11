@@ -29,6 +29,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+        /*
         if (true) {
             // Disable security for the "dev" profile
             http
@@ -39,8 +40,15 @@ public class SecurityConfig {
                     .authorizeRequests()
                     .requestMatchers("/**")
                     .permitAll();
+
         } else {
+
+            */
+
             http
+                    .cors() // Enable CORS
+                    .configurationSource(corsConfigurationSource()) // Use the CORS configuration source
+                    .and()
                     .csrf()
                     .disable()
                     .authorizeHttpRequests()
@@ -50,13 +58,16 @@ public class SecurityConfig {
                     .authenticated()
                     .and()
                     .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                     .authenticationProvider(authenticationProvider)
                     .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        }
+
+
         return http.build();
-    }
+
+        }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -64,7 +75,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));  // frontend server address
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "HEAD"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

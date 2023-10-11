@@ -1,6 +1,6 @@
 package com.example.kd23backend.auth.config;
 
-import com.example.kd23backend.auth.repository.UserRepo;
+import com.example.kd23backend.auth.repository.LoginRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final UserRepo userRepo;
+    private final LoginRepo loginRepo;
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> userRepo.findByEmail(username)
+        return email -> loginRepo.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
