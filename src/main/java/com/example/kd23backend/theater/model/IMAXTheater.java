@@ -1,5 +1,7 @@
 package com.example.kd23backend.theater.model;
 
+import com.example.kd23backend.seat.model.Seat;
+import com.example.kd23backend.theater.model.interfaces.TheaterImplementationStrategy;
 import com.example.kd23backend.theater.model.util.imax_theater.IMAXImplementationStrategy;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

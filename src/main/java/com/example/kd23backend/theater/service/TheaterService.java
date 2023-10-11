@@ -13,26 +13,11 @@ import java.util.Map;
 
 @Service
 public class TheaterService implements ITheaterService {
-    private final Map<String, TheaterFactory> factoryMap = new HashMap<>();
 
     private final TheaterRepository theaterRepository;
 
     public TheaterService(TheaterRepository theaterRepository) {
-        registerFactory(new StandardTheaterFactory());
-        registerFactory(new IMAXTheaterFactory());
         this.theaterRepository = theaterRepository;
-    }
-
-    private void registerFactory(TheaterFactory factory) {
-        factoryMap.put(factory.getType(), factory);
-    }
-
-    public Theater createTheater(String theaterType) {
-        TheaterFactory factory = factoryMap.get(theaterType);
-        if (factory == null) {
-            throw new IllegalArgumentException("Invalid theater type");
-        }
-        return factory.createTheater();
     }
 
     @Override
@@ -44,7 +29,6 @@ public class TheaterService implements ITheaterService {
     public List<Theater> getTheatersForCinemaId(int id) {
         return theaterRepository.findAllByCinema_Id(id);
     }
-
 
     @Override
     public List<Theater> getTheaters() {
