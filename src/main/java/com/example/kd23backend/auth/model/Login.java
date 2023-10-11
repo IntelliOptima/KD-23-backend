@@ -66,4 +66,16 @@ public class Login implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Login{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", user=" + user +
+                ", employee=" + employee +
+                '}';
+    }
 }

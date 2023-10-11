@@ -26,6 +26,7 @@ public class MovieShow {
 
     private Integer price;
 
+    
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     //@JsonManagedReference(value = "movieshow-movie")
@@ -38,7 +39,7 @@ public class MovieShow {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "program_id", referencedColumnName = "id")
-    @JsonBackReference(value = "movieshow-program")
+    @JsonBackReference
     private Program program;
 
     @OneToMany(mappedBy = "movieShow")

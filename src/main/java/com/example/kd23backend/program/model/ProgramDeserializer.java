@@ -9,6 +9,7 @@ import com.example.kd23backend.theater.model.IMAXTheater;
 import com.example.kd23backend.theater.model.StandardTheater;
 import com.example.kd23backend.theater.model.Theater;
 import com.example.kd23backend.theater.model.interfaces.TheaterFactory;
+import com.example.kd23backend.theater.model.util.TheaterManager;
 import com.example.kd23backend.theater.repository.TheaterRepository;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -43,7 +44,7 @@ public class ProgramDeserializer extends StdDeserializer<Program> {
 
     // Serializer ---------------------------------------
     @Override
-    public Program deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
+    public Program deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         System.out.println("IM FUCKING RUNNING AND HITTEN MAYNEE!!!");
         JsonNode programNode =  jsonParser.getCodec().readTree(jsonParser);
         Program program = new Program();
@@ -55,10 +56,11 @@ public class ProgramDeserializer extends StdDeserializer<Program> {
         program.setEndDate(OffsetDateTime.parse(programNode.path("endDate").textValue()).toLocalDate());
         program.setCinema(cinema);
         program.setMovieShows(getMovieShows(programNode.path("movieShows"), program));
-        System.out.println(program.getId());
 
         return program;
     }
+
+
 
     private Set<MovieShow> getMovieShows(JsonNode movieShowsNode, Program program) {
         return StreamSupport.stream(movieShowsNode.spliterator(), false)
@@ -69,15 +71,10 @@ public class ProgramDeserializer extends StdDeserializer<Program> {
                     movie.setId(movieShowNode.path("movie").path("id").asInt());
                     movieShow.setMovie(movie);
 
-                    if (movieShowNode.path("theater").path("type").textValue().equals("STANDARD")) {
-                        StandardTheater standardTheater = new StandardTheater();
-                        standardTheater.setId(movieShowNode.path("theater").path("id").asInt());
-                        movieShow.setTheater(standardTheater);
-                    } else {
-                        IMAXTheater imaxTheater = new IMAXTheater();
-                        imaxTheater.setId(movieShowNode.path("theater").path("id").asInt());
-                        movieShow.setTheater(imaxTheater);
-                    }
+                    Theater theater = TheaterManager.createTheater(movieShowNode.path("theater").path("type").textValue());
+                    theater.setId(movieShowNode.path("theater").path("id").asInt());
+
+
                     System.out.println(movieShowNode.path("startDateTime").textValue());
 
                     LocalDateTime startDateTime = OffsetDateTime.parse(

@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cinema")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class CinemaController {
 
     private final CinemaService cinemaService;
@@ -19,7 +19,7 @@ public class CinemaController {
         this.cinemaService = cinemaService;
     }
 
-    @GetMapping
+    @GetMapping("/get-all-cinemas")
     public ResponseEntity<List<Cinema>> getCinemas(){
         List<Cinema> cinemas = cinemaService.getAllCinemas();
         return cinemas.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(cinemas);

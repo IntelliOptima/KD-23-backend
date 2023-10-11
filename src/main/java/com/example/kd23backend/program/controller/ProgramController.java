@@ -29,11 +29,9 @@ public class ProgramController {
 
     @PostMapping
     public ResponseEntity<Program> findMovieShowById(
-            @RequestBody @JsonDeserialize(using = ProgramDeserializer.class) Program program){
+            @RequestBody Program program){
         System.out.println("Im hit");
-        System.out.println(program);
         Program createdProgram = programService.createProgram(program);
-        System.out.println("Programs size of movieshowslist = " + createdProgram.getMovieShows().size());
         return ResponseEntity.ok(program);
     }
 }

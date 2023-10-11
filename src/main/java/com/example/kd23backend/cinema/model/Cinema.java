@@ -37,6 +37,7 @@
         //@JsonManagedReference(value = "cinema-theaters")
         private List<Theater> theaters;
 
+        @Transient
         @OneToMany(mappedBy = "cinema")
         //@JsonManagedReference(value = "cinema-programs")
         private List<Program> programs;

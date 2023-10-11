@@ -21,4 +21,6 @@ public class User {
     @OneToOne
     @JoinColumn(name = "login_id", referencedColumnName = "id")
     private Login login;
+
+
 }
