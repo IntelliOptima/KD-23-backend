@@ -45,12 +45,12 @@ public class MovieService implements IMovieService {
 
     @Override
     public List<Movie> findAllByActorsContaining(Actor actor, Pageable pageable) {
-        return movieRepository.findAllByActorsContainingOrderByTitle(actor, pageable);
+        return movieRepository.findAllByActorsContainingIgnoreCaseOrderByTitle(actor, pageable);
     }
 
     @Override
     public List<Movie> findAllByGenresContaining(Genre genre, Pageable pageable) {
-        return movieRepository.findAllByGenresContainingOrderByTitle(genre, pageable);
+        return movieRepository.findAllByGenresContainingIgnoreCaseOrderByTitle(genre, pageable);
     }
 
 
@@ -105,8 +105,8 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public List<Actor> findActorByNameContainingIgnoreCase(String actorName, Pageable pageable) {
-        return actorRepository.findByNameContainingIgnoreCase(actorName, pageable);
+    public List<Actor> findActorByNameContainingIgnoreCase(String actorName) {
+        return actorRepository.findByNameContainingIgnoreCase(actorName);
     }
 
     @Override

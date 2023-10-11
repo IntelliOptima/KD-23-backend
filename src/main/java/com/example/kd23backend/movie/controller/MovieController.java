@@ -57,15 +57,10 @@ public class MovieController {
     @RequestMapping("where-movie-actor-contains/{actor}/page=/{page}")
     public ResponseEntity<List<Movie>> getAllMoviesByActorsContains(
             @PathVariable("actor") String actorName, @PathVariable("page") int page) {
-        List<Actor> actor = movieService.findActorByNameContainingIgnoreCase(
-                actorName, getPageableRequest(page, AMOUNT_OF_ACTORS));
-
-        if (actor.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+        Actor actor = movieService.findActorByNameContainingIgnoreCase(actorName).get(0);
 
         List<Movie> movies = movieService.findAllByActorsContaining(
-                actor.get(0), getPageableRequest(page, AMOUNT_OF_MOVIES));
+                actor, getPageableRequest(page, AMOUNT_OF_MOVIES));
         return movies.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(movies);
     }
 

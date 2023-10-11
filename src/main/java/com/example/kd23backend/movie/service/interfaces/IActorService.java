@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface IActorService {
 
-    List<Actor> findActorByNameContainingIgnoreCase(String actorName, Pageable pageable);
+    List<Actor> findActorByNameContainingIgnoreCase(String actorName);
 
     List<Actor> findAllActorsByMoviesContaining(Integer movieId, Pageable pageable);
 
