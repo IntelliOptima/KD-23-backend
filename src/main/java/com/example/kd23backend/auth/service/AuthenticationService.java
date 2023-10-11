@@ -6,13 +6,10 @@ import com.example.kd23backend.auth.model.AuthenticationResponse;
 import com.example.kd23backend.auth.model.RegisterRequest;
 import com.example.kd23backend.auth.model.Role;
 import com.example.kd23backend.auth.model.Login;
-import com.example.kd23backend.auth.repository.UserRepo;
+import com.example.kd23backend.auth.repository.LoginRepo;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
 
-    private final UserRepo userRepo;
+    private final LoginRepo loginRepo;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -36,7 +33,7 @@ public class AuthenticationService {
         login.setEmail(registerRequest.getEmail());
         login.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         login.setRole(Role.USER);
-        userRepo.save(login);
+        loginRepo.save(login);
         var jwtToken = jwtService.generateToken(login);
 
         return AuthenticationResponse.builder()
@@ -51,7 +48,8 @@ public class AuthenticationService {
                         authenticationRequest.getPassword())
         );
 
-        var user = userRepo.findByEmail(authenticationRequest.getEmail()).orElseThrow();
+        var user = loginRepo.findByEmail(authenticationRequest.getEmail()).orElseThrow();
+        System.out.println(user);
         var jwtToken = jwtService.generateToken(user);
 
 
