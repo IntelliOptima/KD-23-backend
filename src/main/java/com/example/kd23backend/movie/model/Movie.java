@@ -58,7 +58,7 @@ public class Movie {
     private Set<Genre> genres;
 
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JsonBackReference(value = "movie-show")
     private Set<MovieShow> movieShows;
 

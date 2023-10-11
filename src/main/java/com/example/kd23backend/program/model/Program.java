@@ -2,17 +2,19 @@ package com.example.kd23backend.program.model;
 
 import com.example.kd23backend.cinema.model.Cinema;
 import com.example.kd23backend.movie_show.model.MovieShow;
+import com.example.kd23backend.program.model.serializer.ProgramDeserializer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.Set;
 
+@EqualsAndHashCode(exclude = "movieShows")
 @Entity
 @Data
 @NoArgsConstructor
@@ -31,8 +33,7 @@ public class Program {
     @JsonBackReference(value = "program-cinema")
     private Cinema cinema;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private Set<MovieShow> movieShows;
 }

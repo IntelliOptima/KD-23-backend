@@ -1,11 +1,7 @@
 package com.example.kd23backend.program.controller;
 
-import com.example.kd23backend.cinema.service.ICinemaService;
 import com.example.kd23backend.program.model.Program;
-import com.example.kd23backend.program.model.ProgramDeserializer;
-import com.example.kd23backend.program.repository.ProgramRepository;
 import com.example.kd23backend.program.service.IProgramService;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +11,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/program")
 public class ProgramController {
-    private IProgramService programService;
+    private final IProgramService programService;
 
     public ProgramController(IProgramService iProgramService) {
         programService = iProgramService;
@@ -28,10 +24,9 @@ public class ProgramController {
     }
 
     @PostMapping
-    public ResponseEntity<Program> findMovieShowById(
-            @RequestBody Program program){
-        System.out.println("Im hit");
+    public ResponseEntity<Program> createProgram(@RequestBody Program program) {
+        System.out.println("Endpoint hit");
         Program createdProgram = programService.createProgram(program);
-        return ResponseEntity.ok(program);
+        return ResponseEntity.ok(createdProgram);
     }
 }
