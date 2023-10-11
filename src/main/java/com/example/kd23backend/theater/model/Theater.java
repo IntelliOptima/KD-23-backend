@@ -1,24 +1,26 @@
 package com.example.kd23backend.theater.model;
 
-import com.example.kd23backend.booking.model.Booking;
 import com.example.kd23backend.cinema.model.Cinema;
 import com.example.kd23backend.seat.model.Seat;
 import com.example.kd23backend.movie_show.model.MovieShow;
-import com.example.kd23backend.theater.model.interfaces.TheaterImplementationStrategy;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Data
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes(value = {
+        @JsonSubTypes.Type(value = IMAXTheater.class, name = "IMAX"),
+        @JsonSubTypes.Type(value = StandardTheater.class, name = "STANDARD") // Add other subtypes as needed
+})
 @Entity
 public abstract class Theater {
     @Id

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CinemaService implements ICinemaService{
     private final CinemaRepository cinemaRepository;
@@ -23,5 +25,8 @@ public class CinemaService implements ICinemaService{
         return cinemaRepository.save(cinema);
     }
 
-
+    @Override
+    public Optional<Cinema> getCinemaByID(Integer cinemaID) {
+        return cinemaRepository.findById(cinemaID);
+    }
 }

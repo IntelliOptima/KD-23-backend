@@ -5,6 +5,7 @@ import com.example.kd23backend.program.repository.ProgramRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProgramService implements IProgramService {
@@ -19,7 +20,7 @@ public class ProgramService implements IProgramService {
     }
 
     @Override
-    public void createProgram(Program program) {
-        programRepository.save(program);
+    public Program createProgram(Program program) {
+        return programRepository.save(program);
     }
 }

@@ -23,7 +23,6 @@
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer id;
 
-
         private String name;
 
         @OneToOne(cascade = CascadeType.MERGE)
