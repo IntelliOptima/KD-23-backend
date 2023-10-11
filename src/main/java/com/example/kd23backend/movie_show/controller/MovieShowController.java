@@ -59,4 +59,14 @@ public class MovieShowController {
         movieShows.forEach(movieShow -> System.out.println(movieShow.getMovie()));
         return movieShows.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(movieShows);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteMovieShow(@PathVariable int id) {
+        try {
+            movieShowService.deleteMovieShow(id);
+            return ResponseEntity.ok(true);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

@@ -14,4 +14,6 @@ public interface IMovieShowService {
     Optional<MovieShow> findMovieShowById(Integer id);
 
     List<MovieShow> findAllByTheaterForTimePeriod(Integer theaterId, Integer cinemaId, LocalDateTime startTime, LocalDateTime endTime );
+
+    void deleteMovieShow(Integer id);
 }
