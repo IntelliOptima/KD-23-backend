@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
-    List<Actor> findByNameContainingIgnoreCase(String actorName, Pageable pageable);
+    List<Actor> findByNameContainingIgnoreCase(String actorName);
 
     @Query(value = "SELECT a.* FROM Actor a " +
             "INNER JOIN movie_actor ma ON a.id = ma.actor_id " +

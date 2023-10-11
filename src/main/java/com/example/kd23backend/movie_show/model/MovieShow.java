@@ -8,12 +8,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+@EqualsAndHashCode(exclude = "program")
 @Entity
 @Data
 @NoArgsConstructor
@@ -26,6 +28,7 @@ public class MovieShow {
 
     private Integer price;
 
+
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     //@JsonManagedReference(value = "movieshow-movie")
@@ -36,9 +39,9 @@ public class MovieShow {
     //@JsonManagedReference(value = "movieshow-theater")
     private Theater theater;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "program_id", referencedColumnName = "id")
-    @JsonBackReference(value = "movieshow-program")
+    @JsonBackReference
     private Program program;
 
     @OneToMany(mappedBy = "movieShow")

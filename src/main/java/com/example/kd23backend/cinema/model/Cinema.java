@@ -23,7 +23,6 @@
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer id;
 
-
         private String name;
 
         @OneToOne(cascade = CascadeType.MERGE)
@@ -38,6 +37,7 @@
         //@JsonManagedReference(value = "cinema-theaters")
         private List<Theater> theaters;
 
+        @Transient
         @OneToMany(mappedBy = "cinema")
         //@JsonManagedReference(value = "cinema-programs")
         private List<Program> programs;

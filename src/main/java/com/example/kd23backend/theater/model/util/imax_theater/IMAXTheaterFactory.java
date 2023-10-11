@@ -9,14 +9,4 @@ public class IMAXTheaterFactory implements TheaterFactory {
     public Theater createTheater() {
         return new IMAXTheater();
     }
-
-    @Override
-    public String[] getDisplayType() {
-        return new String[]{"2D", "3D", "4D"};
-    }
-
-    @Override
-    public String getType() {
-        return "IMAX";
-    }
 }

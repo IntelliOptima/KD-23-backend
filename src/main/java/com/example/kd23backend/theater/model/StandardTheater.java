@@ -8,8 +8,10 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("STANDARD")
 public class StandardTheater extends Theater {
 
-    public StandardTheater() {
-        //this.implementationStrategy = new StandardImplementationStrategy();
+    @Override
+    public Theater createTheater() {
+        StandardTheater standardTheater = new StandardTheater();
+        standardTheater.setImplementationStrategy(new StandardImplementationStrategy());
+        return standardTheater;
     }
-
 }

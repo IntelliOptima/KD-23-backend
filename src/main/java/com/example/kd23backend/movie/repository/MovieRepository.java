@@ -20,9 +20,9 @@ public interface MovieRepository extends JpaRepository<Movie,Integer> {
 
     List<Movie> findByReleaseDateOrderByReleaseDate(LocalDate releaseDate, Pageable pageable);
 
-    List<Movie> findAllByActorsContainingOrderByTitle(Actor actor, Pageable pageable);
+    List<Movie> findAllByActorsContainingIgnoreCaseOrderByTitle(Actor actor, Pageable pageable);
 
-    List<Movie> findAllByGenresContainingOrderByTitle(Genre genre, Pageable pageable);
+    List<Movie> findAllByGenresContainingIgnoreCaseOrderByTitle(Genre genre, Pageable pageable);
 
     List<Movie> findAllByIsAdultTrue(Pageable pageable);
 
