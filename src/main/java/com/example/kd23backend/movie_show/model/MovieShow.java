@@ -39,7 +39,7 @@ public class MovieShow {
     //@JsonManagedReference(value = "movieshow-theater")
     private Theater theater;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "program_id", referencedColumnName = "id")
     @JsonBackReference
     private Program program;

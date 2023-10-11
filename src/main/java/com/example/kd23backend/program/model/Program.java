@@ -33,7 +33,7 @@ public class Program {
     @JsonBackReference(value = "program-cinema")
     private Cinema cinema;
 
-    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "program", fetch = FetchType.EAGER)
     @JsonManagedReference
     private Set<MovieShow> movieShows;
 }
