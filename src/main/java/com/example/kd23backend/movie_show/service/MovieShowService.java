@@ -37,4 +37,9 @@ public class MovieShowService implements IMovieShowService{
         return movieShowRepository.findAllByTheaterIdAndTheater_Cinema_IdAndStartDateTimeIsGreaterThanEqualAndStartDateTimeIsLessThanEqual(
                 theaterId, cinemaId, startTime, endTime);
     }
+
+    @Override
+    public void deleteMovieShow(Integer id) {
+        movieShowRepository.deleteById(id);
+    }
 }
