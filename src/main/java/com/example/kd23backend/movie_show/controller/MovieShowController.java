@@ -52,11 +52,9 @@ public class MovieShowController {
             @PathVariable String endDate,
             @PathVariable Integer cinemaId) {
 
-        System.out.println("IM HIT!!!");
         LocalDateTime startDateTime = OffsetDateTime.parse(startDate).toLocalDateTime();
         LocalDateTime endDateTime = OffsetDateTime.parse(endDate).toLocalDateTime();
 
-        System.out.println("theaterid = " +  theaterId + " start = " + startDate + " enddate =" + endDate + cinemaId);
         List<MovieShow> movieShows = movieShowService.findAllByTheaterForTimePeriod(theaterId, cinemaId, startDateTime, endDateTime);
         movieShows.forEach(movieShow -> System.out.println(movieShow.getMovie()));
         return movieShows.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NO_CONTENT) : ResponseEntity.ok(movieShows);
