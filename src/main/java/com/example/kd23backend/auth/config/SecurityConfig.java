@@ -52,7 +52,7 @@ public class SecurityConfig {
                     .csrf()
                     .disable()
                     .authorizeHttpRequests()
-                    .requestMatchers("/api/v1/auth/**", "/movie-show/find-all-by-date/{date}", "/movie/id=/*","/movie-show/*")
+                    .requestMatchers("/api/v1/auth/**", "/movie-show/find-all-by-date/*", "/movie/id=/*","/movie-show/*")
                     .permitAll()
                     .anyRequest()
                     .authenticated()
