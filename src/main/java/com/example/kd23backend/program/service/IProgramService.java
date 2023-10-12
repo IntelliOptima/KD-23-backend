@@ -9,7 +9,5 @@ public interface IProgramService {
     List<Program> getAllProgramsForCinema(Integer cinemaId);
     Program createProgram(Program program);
 
-    Program createProgram2(Program program);
-
     Program findFirstByOrderByIdDesc();
 }
