@@ -8,11 +8,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.Set;
-
+@EqualsAndHashCode(exclude = "movieShows")
 @Entity
 @Data
 @NoArgsConstructor
@@ -58,6 +59,7 @@ public class Movie {
     private Set<Genre> genres;
 
 
+    @Transient
     @OneToMany(mappedBy = "movie", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JsonBackReference(value = "movie-show")
     private Set<MovieShow> movieShows;
