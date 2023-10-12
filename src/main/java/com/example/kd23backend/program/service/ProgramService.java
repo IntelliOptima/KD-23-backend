@@ -23,16 +23,11 @@ public class ProgramService implements IProgramService {
     }
 
     @Override
-    public Program createProgram(Program program) {
-        return programRepository.save(program);
-    }
-
-    @Override
     public Program findFirstByOrderByIdDesc() {
         return programRepository.findFirstByOrderByIdDesc();
     }
 
-    public Program createProgram2(Program program) {
+    public Program createProgram(Program program) {
         // Save the program first to generate its ID
         Program savedProgram = programRepository.save(program);
 
