@@ -52,7 +52,7 @@ public class SecurityConfig {
                     .csrf()
                     .disable()
                     .authorizeHttpRequests()
-                    .requestMatchers("/api/v1/auth/**")
+                    .requestMatchers("/api/v1/auth/**", "/movie-show/find-all-by-date/{date}", "/movie/id=/*","/movie-show/*")
                     .permitAll()
                     .anyRequest()
                     .authenticated()
@@ -61,7 +61,15 @@ public class SecurityConfig {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                     .authenticationProvider(authenticationProvider)
-                    .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                    .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                    .logout()
+                    .logoutUrl("/logout")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("token")
+                    .clearAuthentication(true);
+
+
+
 
 
         return http.build();

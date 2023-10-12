@@ -16,11 +16,9 @@ public class Booking{
     private Integer id;
     private String email;
 
-
     @ManyToOne
     @JoinColumn(name = "movie_show_id", referencedColumnName = "id")
     private MovieShow movieShow;
-
 
     @OneToOne
     @JoinColumn(name = "seat_id", referencedColumnName = "id")
