@@ -2,6 +2,8 @@ package com.example.kd23backend.config;
 
 import com.example.kd23backend.address.repository.AddressRepository;
 import com.example.kd23backend.auth.config.ApplicationConfig;
+import com.example.kd23backend.auth.model.Login;
+import com.example.kd23backend.auth.model.Role;
 import com.example.kd23backend.auth.repository.LoginRepo;
 import com.example.kd23backend.booking.repository.BookingRepository;
 import com.example.kd23backend.cinema.repository.CinemaRepository;
@@ -9,6 +11,7 @@ import com.example.kd23backend.movie.service.MovieAPIService;
 import com.example.kd23backend.movie.service.MovieService;
 import com.example.kd23backend.seat.repository.SeatRepository;
 import com.example.kd23backend.theater.repository.TheaterRepository;
+import com.example.kd23backend.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -20,6 +23,8 @@ public class InitData implements CommandLineRunner {
 
     @Autowired
     ApplicationConfig applicationConfig;
+
+
 
     @Autowired
     LoginRepo loginRepo;
@@ -50,8 +55,14 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //Init data for cinema -----------------------------------------------
-
 /*
+        Login login = new Login();
+        login.setEmail("admin@test.dk");
+        login.setPassword(applicationConfig.passwordEncoder().encode("admintest1234"));
+        login.setRole(Role.ADMIN);
+        loginRepo.save(login);
+
+
         Login login = new Login();
         login.setEmail("test@test.dk");
         login.setPassword(applicationConfig.passwordEncoder().encode("Test1234"));
