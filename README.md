@@ -22,9 +22,16 @@ spring.datasource.password=KeaDat22!
 
 Run the Backend!
 
+The program should be run in the develop branch
+
 Run the Frontend!
 
+The program should be run in the develop branch
+
 And enjoy ;)
+
+
+
 
 ## Logins and Roles
 
