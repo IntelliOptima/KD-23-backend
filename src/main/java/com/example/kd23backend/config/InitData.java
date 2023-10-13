@@ -57,6 +57,12 @@ public class InitData implements CommandLineRunner {
         //Init data for cinema -----------------------------------------------
 /*
         Login login = new Login();
+        login.setEmail("user@test.dk");
+        login.setPassword(applicationConfig.passwordEncoder().encode("usertest1234"));
+        login.setRole(Role.USER);
+        loginRepo.save(login);
+
+        Login login = new Login();
         login.setEmail("admin@test.dk");
         login.setPassword(applicationConfig.passwordEncoder().encode("admintest1234"));
         login.setRole(Role.ADMIN);

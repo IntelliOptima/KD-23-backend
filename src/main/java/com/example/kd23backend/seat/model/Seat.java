@@ -7,9 +7,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+<<<<<<< HEAD
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+=======
+>>>>>>> 3bae46e2398ba0d055a061f26bb2d87d5273b2f4
 @EqualsAndHashCode(exclude = "booking")
 @Entity
 @Data
