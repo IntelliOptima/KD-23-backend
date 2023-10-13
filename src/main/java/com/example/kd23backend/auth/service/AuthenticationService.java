@@ -54,7 +54,9 @@ public class AuthenticationService {
 
 
         Cookie jwtCookie = new Cookie("token", jwtToken);
+        Cookie roleCookie = new Cookie("Role", user.getRole().name());
         response.addCookie(jwtCookie);
+        response.addCookie(roleCookie);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)

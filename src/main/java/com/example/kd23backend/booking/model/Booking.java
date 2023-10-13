@@ -5,8 +5,9 @@ import com.example.kd23backend.seat.model.Seat;
 import com.example.kd23backend.theater.model.Theater;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
+@EqualsAndHashCode(exclude = "seat")
 @Entity
 @Data
 @NoArgsConstructor
