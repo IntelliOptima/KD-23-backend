@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IBookingService {
 
-    Booking createBooking(Booking booking);
+    List<Booking> createBookings(List<Booking> booking);
 
     List<BookingDTO> findAllBookingsByMovieShowId(int movieShowId);
 

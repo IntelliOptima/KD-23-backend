@@ -7,6 +7,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+
+
 @EqualsAndHashCode(exclude = "booking")
 @Entity
 @Data
@@ -14,9 +20,14 @@ import lombok.NoArgsConstructor;
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
 
     private double priceWeight;
+
+    private int row;
+
+    private int numberInRow;
 
     @ManyToOne
     @JoinColumn(name = "theater_id", referencedColumnName = "id")

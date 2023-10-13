@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 
-@EqualsAndHashCode(exclude = {"program", "movie"})
+@EqualsAndHashCode(exclude = {"program","movie"})
 @Entity
 @Data
 @NoArgsConstructor
