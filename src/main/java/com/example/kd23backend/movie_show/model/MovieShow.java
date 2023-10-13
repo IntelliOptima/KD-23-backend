@@ -15,8 +15,12 @@ import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+<<<<<<< HEAD
+@EqualsAndHashCode(exclude = {"program","movie"})
+=======
 
 @EqualsAndHashCode(exclude = {"program", "movie"})
+>>>>>>> 3bae46e2398ba0d055a061f26bb2d87d5273b2f4
 @Entity
 @Data
 @NoArgsConstructor

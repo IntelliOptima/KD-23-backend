@@ -6,6 +6,7 @@ import com.example.kd23backend.booking.repository.BookingRepository;
 import com.example.kd23backend.movie_show.model.MovieShow;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +20,8 @@ public class BookingService implements IBookingService{
     }
 
     @Override
-    public Booking createBooking(Booking booking) {
-        return bookingRepository.save(booking);
+    public List<Booking> createBookings(List<Booking> bookings) {
+        return bookingRepository.saveAll(bookings);
     }
 
     @Override
