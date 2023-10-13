@@ -15,7 +15,7 @@ import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = "program")
+@EqualsAndHashCode(exclude = {"program","movie"})
 @Entity
 @Data
 @NoArgsConstructor

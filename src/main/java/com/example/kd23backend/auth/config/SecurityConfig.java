@@ -57,7 +57,9 @@ public class SecurityConfig {
                             "/movie/id=/*",
                             "/movie-show/*",
                             "/theater/id=/*",
-                            "/booking")
+                            "/booking",
+                            "/booking/find-all-by-movie-show/*")
+
                     .permitAll()
                     .anyRequest()
                     .authenticated()
