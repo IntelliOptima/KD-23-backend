@@ -12,6 +12,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 @Service
@@ -30,10 +31,11 @@ public class JwtService {
 
 
     public String generateToken(UserDetails userDetails) {
-
+        Map<String, String> claims = new HashMap<>();
+        claims.put("Role", userDetails.getAuthorities().toString());
         return Jwts
                 .builder()
-                .setClaims(new HashMap<>())
+                .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 // Sets expiration to 1 hour

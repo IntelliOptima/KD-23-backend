@@ -32,7 +32,6 @@ public class SecurityConfig {
         /*
         if (true) {
             // Disable security for the "dev" profile
-            */
             http
                     .cors()
                     .and()
@@ -41,33 +40,46 @@ public class SecurityConfig {
                     .authorizeRequests()
                     .requestMatchers("/**")
                     .permitAll();
-/*
+
         } else {
-*/
+
+            */
+
+            http
+                    .cors() // Enable CORS
+                    .configurationSource(corsConfigurationSource()) // Use the CORS configuration source
+                    .and()
+                    .csrf()
+                    .disable()
+                    .authorizeHttpRequests()
+                    .requestMatchers("/api/v1/auth/**",
+                            "/movie-show/find-all-by-date/*",
+                            "/movie/id=/*",
+                            "/movie-show/*",
+                            "/theater/id=/*",
+                            "/booking")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
+                    .authenticationProvider(authenticationProvider)
+                    .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                    .logout()
+                    .logoutUrl("/logout")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("token")
+                    .clearAuthentication(true);
 
 
-//        http
-//                .cors() // Enable CORS
-//                .configurationSource(corsConfigurationSource()) // Use the CORS configuration source
-//                .and()
-//                .csrf()
-//                .disable()
-//                .authorizeHttpRequests()
-//                .requestMatchers("/api/v1/auth/**", "/**")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authenticationProvider(authenticationProvider)
-//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//
-//        return http.build();
+
+
+
         return http.build();
-    }
+
+        }
 
 
     @Bean
@@ -81,4 +93,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 }
