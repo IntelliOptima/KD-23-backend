@@ -9,7 +9,7 @@ public interface IBookingService {
 
     List<Booking> createBookings(List<Booking> booking);
 
-    List<BookingDTO> findAllBookingsByMovieShowId(int movieShowId);
+    List<Booking> findAllBookingsByMovieShowId(int movieShowId);
 
     List<BookingDTO> findAllBookingsByUserEmail(String email);
 }

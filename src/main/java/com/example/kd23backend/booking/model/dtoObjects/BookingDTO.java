@@ -14,7 +14,7 @@ import java.util.Set;
 public class BookingDTO {
     private Integer id;
     private String email;
-    private MovieShow movieShow;
-    private Seat seat;
+    private Integer showId;
+    private Integer seatId;
 
 }
