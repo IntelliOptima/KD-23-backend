@@ -25,14 +25,9 @@ public class BookingService implements IBookingService{
     }
 
     @Override
-    public List<BookingDTO> findAllBookingsByMovieShowId(int movieShowId) {
+    public List<Booking> findAllBookingsByMovieShowId(int movieShowId) {
         List<Booking> bookings = bookingRepository.findAllBookingsByMovieShowId(movieShowId);
-        List<BookingDTO> bookingDTOS = new ArrayList<>();
-        for (Booking booking : bookings) {
-            BookingDTO dto = mapBookingToDTO(booking);
-            bookingDTOS.add(dto);
-        }
-        return bookingDTOS;
+        return bookings;
     }
 
     @Override
@@ -58,9 +53,9 @@ public class BookingService implements IBookingService{
         movieShow.setPrice(booking.getMovieShow().getPrice());
         movieShow.setMovie(booking.getMovieShow().getMovie());
 
-        dto.setMovieShow(movieShow);
+//        dto.setShowId(movieShow);
 
-        dto.setSeat(booking.getSeat());
+//        dto.setSeat(booking.getSeat());
 
         return dto;
     }

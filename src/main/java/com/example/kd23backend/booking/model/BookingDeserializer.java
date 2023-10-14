@@ -30,7 +30,7 @@ public class BookingDeserializer extends StdDeserializer<Booking> {
         Booking booking = new Booking();
         booking.setEmail(bookingNode.path("email").textValue());
         MovieShow movieShow = new MovieShow();
-        movieShow.setId(bookingNode.path("moviewShowId").asInt());
+        movieShow.setId(bookingNode.path("showId").asInt());
         booking.setMovieShow(movieShow);
         Seat seat = new Seat();
         seat.setId(bookingNode.path("seatId").asInt());

@@ -5,6 +5,7 @@ import com.example.kd23backend.seat.repository.SeatRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SeatService implements ISeatService{
@@ -18,5 +19,10 @@ public class SeatService implements ISeatService{
     @Override
     public List<Seat> findAllByTheaterId(int id) {
         return seatRepository.findAllByTheaterId(id);
+    }
+
+    @Override
+    public Optional<Seat> findBySeatId(int id) {
+        return seatRepository.findById(id);
     }
 }

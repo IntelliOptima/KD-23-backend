@@ -14,15 +14,15 @@ import org.hibernate.annotations.CascadeType;
 
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = "seat")
+@EqualsAndHashCode(exclude = {"seat"})
 @Entity
 @Data
 @NoArgsConstructor
 @JsonDeserialize(using = BookingDeserializer.class)
 public class Booking{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Cascade(CascadeType.ALL)
     private Integer id;
     private String email;
 
