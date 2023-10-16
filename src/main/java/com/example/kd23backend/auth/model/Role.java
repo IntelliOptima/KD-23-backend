@@ -2,7 +2,7 @@ package com.example.kd23backend.auth.model;
 
 public enum Role {
 
-    USER,
-    EMPLOYEE,
-    ADMIN
+    ROLE_USER,
+    ROLE_EMPLOYEE,
+    ROLE_ADMIN,
 }

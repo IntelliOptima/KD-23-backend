@@ -3,20 +3,18 @@ package com.example.kd23backend.auth.model;
 import com.example.kd23backend.employee.model.Employee;
 import com.example.kd23backend.user.model.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-
+@Data
+@Builder
 @Entity
 @NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor
 public class Login implements UserDetails {
 
     @Id

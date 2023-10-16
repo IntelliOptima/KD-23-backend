@@ -19,6 +19,7 @@ public class ApplicationConfig {
 
     private final LoginRepo loginRepo;
 
+
     @Bean
     public UserDetailsService userDetailsService() {
         return email -> loginRepo.findByEmail(email)
